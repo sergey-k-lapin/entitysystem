@@ -23,7 +23,7 @@ public:
     System(World* w);
     virtual ~System();
     virtual void processEntity(Entity *e){};
-    void process();
+    void process(); //Deprecated in threaded systems
     template <typename CType>
     void AcceptComponentType(){
         AcceptComponentType(ComponentType::getTypeFor<CType>());
@@ -36,18 +36,17 @@ public:
     std::unordered_set<Entity*> entitySet;
     unsigned int id;
 //    bool autoUpdate = false; 
-private:
     void InternalThreadEntry();
     pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+    void ApplyChanges();
 
-    
+//private:
     static unsigned int _ID;
     std::bitset<128> componentBits;
     World* world;
     std::deque<Entity*> added;
     std::deque<Entity*> removed;
-    void ApplyChanges();
 };
 
 #endif	/* SYSTEM_H */

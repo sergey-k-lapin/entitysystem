@@ -22,9 +22,9 @@ System::System(World* w) {
 System::~System() {
 }
 
-void System::process(){
-    std::cout << typeid(*this).name() << std::endl;
-    std::cout << "Process " << entitySet.size() << std::endl;
+void System::process(){//Depricated in threaded system class
+//    std::cout << typeid(*this).name() << std::endl;
+//    std::cout << "Process " << entitySet.size() << std::endl;
     for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
         this->processEntity(*it);
     }
@@ -71,17 +71,17 @@ void System::ApplyChanges() {
 
 void System::InternalThreadEntry(){
     while(true){
-        std::cout << typeid(*this).name() << std::endl;
-        std::cout << "Process " << entitySet.size() << std::endl;
+//        std::cout << typeid(*this).name() << std::endl;
+//        std::cout << "Process " << entitySet.size() << std::endl;
 
         for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
             this->processEntity(*it);
-            sleep(1);
+//            sleep(1);
         }
         this->ApplyChanges();
         if ( entitySet.empty() && added.empty() && removed.empty() ){
             pthread_mutex_lock(&my_mutex);
-            std::cout << typeid(*this).name() << " is waiting." << std::endl;
+//            std::cout << typeid(*this).name() << " is waiting." << std::endl;
             pthread_cond_wait(&cond, &my_mutex);
             pthread_mutex_unlock(&my_mutex);        
         }
