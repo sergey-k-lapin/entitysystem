@@ -8,7 +8,7 @@
 #include "System.h"
 #include "SystemType.h"
 #include "EntityManager.h"
-#include <unistd.h> //RMOVE
+//#include <unistd.h> //RMOVE
 
 unsigned int System::_ID = 0;
 
@@ -16,7 +16,7 @@ System::System(World* w) {
     this->world = w;
     this->id = ++_ID;
 
-    this->StartInternalThread();
+//    this->StartInternalThread();
 }
 
 System::~System() {
@@ -41,7 +41,7 @@ void System::AddEntity(Entity* e){
 //        e->getSystemBits()->set(this->id);    
     added.push_back(e);
 //  pthread_mutex_lock(&my_mutex);
-    pthread_cond_signal(&cond);
+//    pthread_cond_signal(&cond);
 //  pthread_mutex_unlock(&my_mutex);
 
 }
@@ -69,24 +69,24 @@ void System::ApplyChanges() {
     }
 }
 
-void System::InternalThreadEntry(){
-    while(true){
-//        std::cout << typeid(*this).name() << std::endl;
-//        std::cout << "Process " << entitySet.size() << std::endl;
-
-        for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
-            this->processEntity(*it);
-//            sleep(1);
-        }
-        this->ApplyChanges();
-        if ( entitySet.empty() && added.empty() && removed.empty() ){
-            pthread_mutex_lock(&my_mutex);
-//            std::cout << typeid(*this).name() << " is waiting." << std::endl;
-            pthread_cond_wait(&cond, &my_mutex);
-            pthread_mutex_unlock(&my_mutex);        
-        }
-    }
-}
+//void System::InternalThreadEntry(){
+//    while(true){
+////        std::cout << typeid(*this).name() << std::endl;
+////        std::cout << "Process " << entitySet.size() << std::endl;
+//
+//        for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
+//            this->processEntity(*it);
+////            sleep(1);
+//        }
+//        this->ApplyChanges();
+//        if ( entitySet.empty() && added.empty() && removed.empty() ){
+//            pthread_mutex_lock(&my_mutex);
+////            std::cout << typeid(*this).name() << " is waiting." << std::endl;
+//            pthread_cond_wait(&cond, &my_mutex);
+//            pthread_mutex_unlock(&my_mutex);        
+//        }
+//    }
+//}
 
 void System::AcceptComponentType(ComponentType *type){
     this->componentBits.set(type->getIndex());

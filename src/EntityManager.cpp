@@ -35,7 +35,7 @@ void EntityManager::InternalThreadEntry(){
     }
 }
 
-void EntityManager::applyChanges() {
+//void EntityManager::applyChanges() {
 //    //For each changed entity
 //    while ( !changed.empty() ){
 //        Entity* e = changed.front();
@@ -45,7 +45,7 @@ void EntityManager::applyChanges() {
 //        changed.pop_front();
 //    }
 //    //Clear all changed entityes
-}
+//}
 
 void EntityManager::addToChange(Entity* e){
     changed.push_back( e );

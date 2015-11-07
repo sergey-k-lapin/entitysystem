@@ -29,19 +29,19 @@ public:
         AcceptComponentType(ComponentType::getTypeFor<CType>());
     };
     void AcceptComponentType(ComponentType* type);
-    void AddEntity(Entity* e);
-    void DeleteEntity(Entity* e);
+    virtual void AddEntity(Entity* e);
+    virtual void DeleteEntity(Entity* e);
     bool CompatibleWithConponents(std::bitset<128>* componentVector);
     std::bitset<128> getComponetBits();
     std::unordered_set<Entity*> entitySet;
+    void ApplyChanges();
     unsigned int id;
 //    bool autoUpdate = false; 
-    void InternalThreadEntry();
-    pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
-    pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-    void ApplyChanges();
 
-//private:
+protected:
+//    void InternalThreadEntry();
+//    pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
+//    pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
     static unsigned int _ID;
     std::bitset<128> componentBits;
     World* world;

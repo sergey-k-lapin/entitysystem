@@ -19,7 +19,7 @@ class EntityManager:public Thread{
 public:
     EntityManager(World *w);
     virtual ~EntityManager();
-    void applyChanges();
+//    void applyChanges();
     void addToChange(Entity* e);
 private:
     World* world;

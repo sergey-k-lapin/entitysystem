@@ -10,6 +10,7 @@
 #define gamedemo_entitysystem_h
 #include <Entity.h>
 #include <System.h>
+#include <AsyncSystem.h>
 #include <SystemManager.h>
 #include <World.h>
 
