@@ -22,20 +22,6 @@ System::System(World* w) {
 System::~System() {
 }
 
-void System::process(){//Depricated in threaded system class
-//    std::cout << typeid(*this).name() << std::endl;
-//    std::cout << "Process " << entitySet.size() << std::endl;
-    for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
-        this->processEntity(*it);
-    }
-    this->ApplyChanges();
-    //Update changes;
-//    if (autoUpdate) {
-//        this->world->getEntityManager()->applyChanges();
-//    }
-
-}
-
 void System::AddEntity(Entity* e){
 //        entitySet.insert(e);
 //        e->getSystemBits()->set(this->id);    

@@ -23,7 +23,6 @@ public:
     System(World* w);
     virtual ~System();
     virtual void processEntity(Entity *e){};
-    void process(); //Deprecated in threaded systems
     template <typename CType>
     void AcceptComponentType(){
         AcceptComponentType(ComponentType::getTypeFor<CType>());
