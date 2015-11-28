@@ -12,6 +12,7 @@
 #include <System.h>
 #include <AsyncSystem.h>
 #include <SystemManager.h>
+#include <EntityManager.h>
 #include <World.h>
 
 #endif

@@ -15,7 +15,8 @@ public:
     Thread();
     virtual ~Thread();
     bool StartInternalThread();
-    void WaitForInternalThreadToExit();
+    int WaitForInternalThreadToExit();
+    int CancelInternalThread();
 private:
     /** Implement this method in your subclass with the code you want your thread to run. */   
     virtual void InternalThreadEntry() = 0;

@@ -18,6 +18,7 @@ AsyncSystem::~AsyncSystem(){
 
 void AsyncSystem::InternalThreadEntry(){
     while(true){
+        pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
         for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
             this->processEntity(*it);
         }
@@ -27,6 +28,8 @@ void AsyncSystem::InternalThreadEntry(){
             pthread_cond_wait(&cond, &my_mutex);
             pthread_mutex_unlock(&my_mutex);
         }
+        pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+        pthread_testcancel();
     }
 }
 

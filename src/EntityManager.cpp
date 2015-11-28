@@ -31,7 +31,9 @@ void EntityManager::InternalThreadEntry(){
         }
         pthread_mutex_lock(&my_mutex);
         pthread_cond_wait(&cond, &my_mutex);
-        pthread_mutex_unlock(&my_mutex);        
+        pthread_mutex_unlock(&my_mutex);
+        
+        pthread_testcancel();
     }
 }
 

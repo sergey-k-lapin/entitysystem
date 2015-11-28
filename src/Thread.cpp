@@ -5,7 +5,9 @@
  * Created on 24 Сентябрь 2015 г., 16:23
  */
 
-#include "Thread.h"
+#include <Thread.h>
+#include <errno.h>
+#include <iostream>
 
 Thread::Thread() {
 }
@@ -19,10 +21,28 @@ bool Thread::StartInternalThread() {
 }
 
 /** Will not return until the internal thread has exited. */
-void Thread::WaitForInternalThreadToExit() {
-    (void) pthread_join(_thread, NULL);
+int Thread::WaitForInternalThreadToExit() {
+    return pthread_join(_thread, NULL);
 }
 
 void* Thread::InternalThreadEntryFunc(void * This){
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
     (( Thread* )This)->InternalThreadEntry(); return NULL;
+}
+
+int Thread::CancelInternalThread(){
+    int err = pthread_cancel(_thread);
+    if (err != ESRCH) {
+//        std::cout << "Stop thread "<< _thread << std::endl;
+        void *res;
+        err = pthread_join(_thread, &res);
+//        if (res == PTHREAD_CANCELED) {
+//            printf("Thread was canceled\n");
+//        }
+    }
+//    else {
+//        std::cout << "Thread " << _thread <<" not found."<< std::endl;
+//    }
+    return err;
 }
