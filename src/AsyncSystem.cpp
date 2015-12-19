@@ -9,7 +9,7 @@
 #include <AsyncSystem.h>
 
 AsyncSystem::AsyncSystem(World *w):System(w){
-    this->StartInternalThread();
+    //this->StartInternalThread();
 }
 
 AsyncSystem::~AsyncSystem(){
