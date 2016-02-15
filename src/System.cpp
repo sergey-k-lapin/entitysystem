@@ -84,3 +84,9 @@ std::bitset<128> System::getComponetBits(){
 bool System::CompatibleWithConponents(std::bitset<128>* componentVector){
     return ( (this->componentBits & *componentVector) ==  this->componentBits);
 }
+int System::Lock(pthread_mutex_t* mutex){
+    return pthread_mutex_lock( mutex );
+}
+int System::Unlock(pthread_mutex_t* mutex){
+    return pthread_mutex_unlock( mutex );
+}

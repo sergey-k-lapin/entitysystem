@@ -36,7 +36,8 @@ public:
     void ApplyChanges();
     unsigned int id;
 //    bool autoUpdate = false; 
-
+    int Lock(pthread_mutex_t* mutex);
+    int Unlock(pthread_mutex_t* mutex);
 protected:
 //    void InternalThreadEntry();
 //    pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
