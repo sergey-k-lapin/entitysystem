@@ -45,6 +45,9 @@ public:
     Entity* addComponent(Component *component);
     Entity* addComponent(Component *component, ComponentType *type);
 
+    Entity* addToCurrent(Component *component, ComponentType *type);
+    Entity* removeFromCurrent(Component *component);
+
     template <typename c>
     Entity* removeComponent(){
         return this->removeComponent(ComponentType::getTypeFor<c>());
@@ -62,8 +65,11 @@ public:
     std::unordered_map<ComponentType*, Component*> components;
     std::bitset<128> addedComponentBits;
     
-    std::unordered_set<ComponentType*> removedComponents;
-    std::bitset<128> removedComponentBits;
+    std::unordered_set<ComponentType*> removedComponents; //Must be depricated
+    std::bitset<128> removedComponentBits; //Must be depricated
+    
+    std::vector<Component*> addComponents;
+    std::vector<Component*> removeComponents;
     
     bool changed;
 private:

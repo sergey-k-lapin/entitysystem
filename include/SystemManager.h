@@ -29,6 +29,10 @@ public:
     std::bitset<128>* getComponentsAcceptedByAllSystems();
     std::unordered_map<std::bitset<128>, std::vector<System*>*> systemsByComponentHash;
     std::unordered_map<int, System*> *getSystems();
+    
+    std::unordered_map<ComponentType*, std::bitset<128>*> SystemsForComponent; //TODO: Move to System manager
+    void addSystemToComponetMap(System *sys, ComponentType *type);
+
 private:
 //    std::map<ComponentType*, std::map<int, System*>*> systemsByComponents;
 //    std::unordered_multimap<std::bitset<128>, System*> systemsByComponentHash;

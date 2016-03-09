@@ -24,7 +24,7 @@ void EntityManager::InternalThreadEntry(){
         //For each changed entity
         while ( !changed.empty() ){
             Entity* e = changed.front();
-            e->update();
+            e->update();//Должно происходить в ComonentManager и вызываться в момент добавления или удаления сущности в/из сыстемы.
             world->changeEntity( e );
             e->reset();
             changed.pop_front();

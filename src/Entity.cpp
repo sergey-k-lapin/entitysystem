@@ -9,6 +9,7 @@
 
 #include "Entity.h"
 #include "EntityManager.h"
+#include "SystemManager.h"
 
 int Entity::INDEX = 0;
 
@@ -59,12 +60,39 @@ Entity* Entity::addComponent(Component *component){
 }
 
 Entity* Entity::addComponent(Component *component, ComponentType *type){
-    components.insert(std::pair<ComponentType*, Component*>(type, component));
-    addedComponentBits.set( type->getIndex() );
-    if (!changed){
-        world->getEntityManager()->addToChange( this );
+    //addToCurrent(component, type); //Remove
+    
+    auto it = this->world->sm->SystemsForComponent.find(type); //Find System bits for component type
+    if (it == this->world->sm->SystemsForComponent.end()){ //If not found
+        std::cout << "Warning: Systems for component type "<< type->index << " not found." << std::endl;
+    } else {
+        component->usedInSystems = *it->second;
+//        std::cout << component->usedInSystems << std::endl;
+//        std::cout << *it->second << std::endl;
     }
+    
+    addComponents.push_back(component);
+    world->getComponentManager()->addToChange( this );
+    
+//    addedComponentBits.set( type->getIndex() ); //Move to ComponenManager all below
+//    if (!changed){
+//        world->getEntityManager()->addToChange( this );
+//    }
     changed = true;
+    return this;
+}
+
+Entity* Entity::addToCurrent(Component *component, ComponentType *type){
+    components.insert(std::pair<ComponentType*, Component*>(type, component));
+    return this;
+}
+
+Entity* Entity::removeFromCurrent(Component *component){
+    ComponentType *type = ComponentType::getTypeFor(component);
+    auto c = components.find(type);
+    if (c != components.end()){
+        components.erase(c);
+    }
     return this;
 }
 
@@ -91,10 +119,11 @@ Component* Entity::getComponent(ComponentType *type){
     return NULL;
 }
 
-void Entity::update(){
+void Entity::update(){ //TODO: Должно реализоваться в ComponentManager
     (*changedComponentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
     for (auto it = removedComponents.begin(); it != removedComponents.end(); ++it){
-        delete *it; //TODO: object manager...
+//        delete *it; //TODO: object manager...
+        components.erase(components.find(*it));
     }
     removedComponents.clear();
 }

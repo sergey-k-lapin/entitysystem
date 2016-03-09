@@ -48,6 +48,19 @@ void SystemManager::addSystemWithComponentBits(System* sys, std::bitset<128>* co
 
 }
 
+void SystemManager::addSystemToComponetMap(System *sys, ComponentType *type){
+    auto it = this->SystemsForComponent.find(type); //Find System bits for component type
+    std::bitset<128> *systems; //System bits
+    if (it == this->SystemsForComponent.end()){ //If not found
+        systems = new std::bitset<128>(); //Create new bitset
+        SystemsForComponent.insert(std::pair<ComponentType*, std::bitset<128>*>(type, systems));
+    } else {
+        systems = it->second;
+    }
+    systems->set(sys->id);
+    
+}
+
 //std::map<int, System*>* SystemManager::getSystemsByComponentType(ComponentType* type){
 //    std::map<ComponentType*, std::map<int, System*>*>::iterator sysMap = systemsByComponents.find(type);
 //    return (*sysMap).second;

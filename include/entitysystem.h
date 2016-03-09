@@ -11,6 +11,7 @@
 #include <Entity.h>
 #include <System.h>
 #include <AsyncSystem.h>
+#include <SyncSystem.h>
 #include <SystemManager.h>
 #include <EntityManager.h>
 #include <World.h>

@@ -14,11 +14,11 @@
 #include <bitset>
 #include <unordered_set>
 #include <deque>
-#include "Thread.h"
+//#include "Thread.h"
 
 class World;
 
-class System:public Thread {
+class System {
 public:
     System(World* w);
     virtual ~System();
@@ -38,6 +38,7 @@ public:
 //    bool autoUpdate = false; 
     int Lock(pthread_mutex_t* mutex);
     int Unlock(pthread_mutex_t* mutex);
+    
 protected:
 //    void InternalThreadEntry();
 //    pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -47,7 +48,7 @@ protected:
     World* world;
     std::deque<Entity*> added;
     std::deque<Entity*> removed;
-};
+    };
 
 #endif	/* SYSTEM_H */
 

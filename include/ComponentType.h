@@ -33,10 +33,10 @@ public:
     static ComponentType* getTypeFor(Component *c);
     static int getIndexFor(Component *c);
     static ComponentType* getType( const std::type_info *id);
+    int index;
 private:
     static int INDEX;
-    int index;
-    Component *type;    
+    Component *type;
 };
 
 #endif	/* COMPONENTTYPE_H */

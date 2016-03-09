@@ -14,17 +14,18 @@ World::World() {
 //    cm = new ComponentManager( this );
     sm = new SystemManager( this );
     em = new EntityManager( this );
+    cm = new ComponentManager( this );
 }
 
 World::~World() {
-//    delete cm;
+    delete cm;
     delete sm;
     delete em;
 }
 
-//ComponentManager* World::getComponentManager(){
-//    return this->cm;
-//}
+ComponentManager* World::getComponentManager(){
+    return this->cm;
+}
 
 SystemManager* World::getSystemManager(){
     return this->sm;
@@ -90,6 +91,7 @@ void World::changeEntity(Entity *e){ //Move to System Manager
         }
     }
 }
+
 void World::deleteEntity(Entity *e){
     //TODO: Implement
 }

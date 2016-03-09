@@ -9,8 +9,9 @@
 #ifndef AsyncSystem_h
 #define AsyncSystem_h
 #include <System.h>
+#include <Thread.h>
 
-class AsyncSystem:public System{
+class AsyncSystem:public System, public Thread{
 public:
     AsyncSystem(World *w);
     virtual ~AsyncSystem();

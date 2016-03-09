@@ -10,17 +10,19 @@
 
 #include <vector>
 #include <unordered_map>
+#include <ComponentManager.h>
 
 class SystemManager;
 class Entity;
 class Manager;
 class EntityManager;
+class ComponentManager;
 
 class World {
 public:
     World();
     virtual ~World();
-//    ComponentManager* getComponentManager();
+    ComponentManager* getComponentManager();
     SystemManager* getSystemManager();
     EntityManager* getEntityManager();
 
@@ -29,9 +31,10 @@ public:
     void deleteEntity(Entity *e);
     void enable(Entity *e);
     void disable(Entity *e);
-private:
-    SystemManager *sm; 
+//private:
+    SystemManager *sm;
     EntityManager *em;
+    ComponentManager *cm;
 };
 
 #endif	/* WORLD_H */

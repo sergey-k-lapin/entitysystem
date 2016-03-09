@@ -8,6 +8,8 @@
 #include "System.h"
 #include "SystemType.h"
 #include "EntityManager.h"
+#include "SystemManager.h"
+
 //#include <unistd.h> //RMOVE
 
 unsigned int System::_ID = 0;
@@ -76,7 +78,9 @@ void System::ApplyChanges() {
 
 void System::AcceptComponentType(ComponentType *type){
     this->componentBits.set(type->getIndex());
+    world->sm->addSystemToComponetMap(this, type);
 }
+
 std::bitset<128> System::getComponetBits(){
     return this->componentBits;
 }

@@ -8,11 +8,13 @@
 #ifndef COMPONENT_H
 #define	COMPONENT_H
 
+#include <bitset>
+
 class Component {
 public:
     Component();
     virtual ~Component();
-//    unsigned int useCount = 0;
+    std::bitset<128> usedInSystems;
 private:
     unsigned int id;
 };

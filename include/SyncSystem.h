@@ -15,7 +15,6 @@ public:
     SyncSystem(World *w);
     virtual ~SyncSystem();
     void process();
-
 private:
 
 };
