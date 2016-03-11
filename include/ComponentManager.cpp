@@ -29,9 +29,20 @@ void ComponentManager::InternalThreadEntry(){
             entityProcessed = false;
             
             for ( auto removeIterator = e->removeComponents.begin(); removeIterator != e->removeComponents.end();) { //Process removed components
-                Component *componentToRemove = *removeIterator;
-                ComponentType *addComponentType = ComponentType::getTypeFor(componentToRemove);
+                Component *componentToRemove = removeIterator->second;
+//                ComponentType *removeComponentType = removeIterator->first;
+                result = *e->getSystemBits() & componentToRemove->usedInSystems;
                 
+                std::cout << *e->getSystemBits() << std::endl;
+                std::cout << componentToRemove->usedInSystems << std::endl;
+                
+                if ( !result.any()) {
+                    e->removeFromCurrent(componentToRemove);
+                    entityProcessed = true;
+                    e->removeComponents.erase(removeIterator++);
+                } else {
+                    ++removeIterator;
+                }
             }
             
             for (auto cit = e->addComponents.begin(); cit != e->addComponents.end(); ){ //Process added components
@@ -45,13 +56,13 @@ void ComponentManager::InternalThreadEntry(){
                     entityProcessed = true;
                     e->addComponents.erase(cit);
                 } else {
-                    cit++;
+                    ++cit;
                 }
             }
             if (entityProcessed) {
-                changed.erase(it);
+                changed.erase(it++);
             } else {
-                it++;
+                ++it;
             }
 
 //            Entity* e = changed.front();
@@ -70,6 +81,10 @@ void ComponentManager::InternalThreadEntry(){
 }
 
 void ComponentManager::addToChange(Entity *e){
-    changed.push_back( e );
+//    changed.push_back( e );
+    auto it = changed.find( e );
+    if ( it == changed.end() ) {
+        changed.insert( e );        
+    }
     pthread_cond_signal(&cond);
 }

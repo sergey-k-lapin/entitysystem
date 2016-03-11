@@ -11,7 +11,8 @@
 
 //#include <stdio.h>
 #include <Thread.h>
-#include <deque>
+//#include <deque>
+#include <unordered_set>
 #include <bitset>
 #include "Entity.h"
 #include <World.h>
@@ -30,7 +31,7 @@ public:
     void addToChange(Entity* e);
     void InternalThreadEntry();
 
-    std::deque<Entity*> changed;
+    std::unordered_set<Entity*> changed;
 
     pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_cond_t cond = PTHREAD_COND_INITIALIZER;

@@ -97,16 +97,29 @@ Entity* Entity::removeFromCurrent(Component *component){
 }
 
 Entity* Entity::removeComponent(Component *component){
-    removeComponent(ComponentType::getTypeFor(component));
+    removeComponent(component, ComponentType::getTypeFor(component));
     return this;
 }
 
-Entity* Entity::removeComponent(ComponentType* type){
-    removedComponents.insert( type );
-    removedComponentBits.set( type->getIndex());
-    if (!changed){
-        world->getEntityManager()->addToChange( this );
+Entity * Entity::removeComponent(ComponentType* type) {
+    auto it = components.find( type );
+    if (it != components.end()) {
+        removeComponent(it->second, it->first);
     }
+    return this;
+}
+
+
+Entity* Entity::removeComponent(Component* component,ComponentType* type){
+    removeComponents.insert(std::pair<ComponentType*, Component*>(type, component));
+    removedComponentBits.set( type->getIndex());
+//    this->world->getComponentManager()->addToChange( this );
+     world->getEntityManager()->addToChange( this );
+
+ //    removedComponents.insert( type );
+//    if (!changed){
+//        world->getEntityManager()->addToChange( this );
+//    }
     changed = true;
     return this;
 }
@@ -121,11 +134,11 @@ Component* Entity::getComponent(ComponentType *type){
 
 void Entity::update(){ //TODO: Должно реализоваться в ComponentManager
     (*changedComponentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
-    for (auto it = removedComponents.begin(); it != removedComponents.end(); ++it){
-//        delete *it; //TODO: object manager...
-        components.erase(components.find(*it));
-    }
-    removedComponents.clear();
+//    for (auto it = removedComponents.begin(); it != removedComponents.end(); ++it){
+////        delete *it; //TODO: object manager...
+//        components.erase(components.find(*it));
+//    }
+//    removedComponents.clear();
 }
 
 void Entity::addToWorld(){

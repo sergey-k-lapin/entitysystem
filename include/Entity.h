@@ -55,6 +55,7 @@ public:
     
     Entity* removeComponent(Component *component);
     Entity* removeComponent(ComponentType* type);
+    Entity* removeComponent(Component* component, ComponentType* type);
     
     void update();
     void reset();
@@ -69,7 +70,7 @@ public:
     std::bitset<128> removedComponentBits; //Must be depricated
     
     std::vector<Component*> addComponents;
-    std::vector<Component*> removeComponents;
+    std::unordered_map<ComponentType*, Component*> removeComponents;
     
     bool changed;
 private:
