@@ -24,9 +24,11 @@ void EntityManager::InternalThreadEntry(){
         //For each changed entity
         while ( !changed.empty() ){
             Entity* e = changed.front();
+            e->lock();
             e->update();//Должно происходить в ComonentManager и вызываться в момент добавления или удаления сущности в/из сыстемы.
             world->changeEntity( e );
             e->reset();
+            e->unlock();
             changed.pop_front();
         }
         pthread_mutex_lock(&my_mutex);

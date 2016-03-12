@@ -82,9 +82,9 @@ void ComponentManager::InternalThreadEntry(){
 
 void ComponentManager::addToChange(Entity *e){
 //    changed.push_back( e );
-    auto it = changed.find( e );
-    if ( it == changed.end() ) {
-        changed.insert( e );        
-    }
+//    auto it = changed.find( e );
+//    if ( it == changed.end() ) {
+        changed.insert( e );
+//    }
     pthread_cond_signal(&cond);
 }

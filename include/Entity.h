@@ -59,6 +59,10 @@ public:
     
     void update();
     void reset();
+    
+    int lock();
+    int unlock();
+    void addToChange();
 
     std::bitset<128> *componentBits;
     std::bitset<128> *changedComponentBits;
@@ -73,6 +77,9 @@ public:
     std::unordered_map<ComponentType*, Component*> removeComponents;
     
     bool changed;
+    pthread_mutex_t mutex;
+    pthread_mutexattr_t mutexAttr;
+
 private:
     ComponentManager *componentManager;
     int id;

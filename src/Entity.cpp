@@ -19,11 +19,17 @@ Entity::Entity() {
 }
 
 Entity::Entity(World *world) {
-        this->world = world;
+    this->world = world;
 	this->id = INDEX++;
-	systemBits = new std::bitset<128>(); //TODO: Remove.
+	systemBits = new std::bitset<128>();
 	componentBits = new std::bitset<128>();
-        changedComponentBits = new std::bitset<128>();
+    changedComponentBits = new std::bitset<128>();
+    
+    //Create recursive mutex
+    pthread_mutexattr_init(&mutexAttr);
+    pthread_mutexattr_settype(&mutexAttr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init(&mutex, &mutexAttr);
+    
 	reset();
 }
 
@@ -60,34 +66,48 @@ Entity* Entity::addComponent(Component *component){
 }
 
 Entity* Entity::addComponent(Component *component, ComponentType *type){
-    //addToCurrent(component, type); //Remove
-    
-    auto it = this->world->sm->SystemsForComponent.find(type); //Find System bits for component type
-    if (it == this->world->sm->SystemsForComponent.end()){ //If not found
-        std::cout << "Warning: Systems for component type "<< type->index << " not found." << std::endl;
+//    lock(); //Lock while changing entity
+    //To be sure that we don't have this type of component
+    if ( !addedComponentBits.test(type->getIndex()) && !componentBits->test(type->getIndex()) ) {
+        addedComponentBits.set(type->getIndex()); //Set as added
+//        unlock(); //Unlock entity
+        components.insert(std::pair<ComponentType*, Component*>(type, component)); //Add component
+        //Move this block to Component constructor!
+        auto it = this->world->sm->SystemsForComponent.find(type); //Find System bits for component type
+        if (it == this->world->sm->SystemsForComponent.end()){ //If not found
+            std::cout << "Warning: Systems for component type "<< type->index << " not found." << std::endl;
+        } else {
+            component->usedInSystems = *it->second;
+        }
+//        world->getEntityManager()->addToChange( this ); //Add Entity to change queue
+        return this;
+    } else if (removedComponentBits.test(type->getIndex())) { //If mark as removeed, replace with new.
+        components[type] = component; //Replace;
+        removedComponentBits.reset( type->getIndex());
+        removedComponents.erase(removedComponents.find(type));
+//        unlock(); //Unlock entity
+        return this;
     } else {
-        component->usedInSystems = *it->second;
-//        std::cout << component->usedInSystems << std::endl;
-//        std::cout << *it->second << std::endl;
+        return NULL;
     }
     
-    addComponents.push_back(component);
-    world->getComponentManager()->addToChange( this );
+//    addComponents.push_back(component);
+//    world->getComponentManager()->addToChange( this );
     
 //    addedComponentBits.set( type->getIndex() ); //Move to ComponenManager all below
 //    if (!changed){
 //        world->getEntityManager()->addToChange( this );
 //    }
-    changed = true;
-    return this;
+//    changed = true;
+//    return this;
 }
 
-Entity* Entity::addToCurrent(Component *component, ComponentType *type){
+Entity* Entity::addToCurrent(Component *component, ComponentType *type){ //Remove
     components.insert(std::pair<ComponentType*, Component*>(type, component));
     return this;
 }
 
-Entity* Entity::removeFromCurrent(Component *component){
+Entity* Entity::removeFromCurrent(Component *component){ //Remove
     ComponentType *type = ComponentType::getTypeFor(component);
     auto c = components.find(type);
     if (c != components.end()){
@@ -109,19 +129,33 @@ Entity * Entity::removeComponent(ComponentType* type) {
     return this;
 }
 
+void Entity::addToChange() {
+    world->getEntityManager()->addToChange( this );
+}
 
 Entity* Entity::removeComponent(Component* component,ComponentType* type){
-    removeComponents.insert(std::pair<ComponentType*, Component*>(type, component));
-    removedComponentBits.set( type->getIndex());
+//    lock();
+    if ( componentBits->test(type->getIndex())) {
+        removedComponentBits.set( type->getIndex());
+        removedComponents.insert( type );
+//        unlock();
+        return this;
+    } else {
+        
+//        unlock();
+        return NULL;
+    }
+//    removeComponents.insert(std::pair<ComponentType*, Component*>(type, component));
+//    removedComponentBits.set( type->getIndex());
 //    this->world->getComponentManager()->addToChange( this );
-     world->getEntityManager()->addToChange( this );
+//     world->getEntityManager()->addToChange( this );
 
  //    removedComponents.insert( type );
 //    if (!changed){
 //        world->getEntityManager()->addToChange( this );
 //    }
-    changed = true;
-    return this;
+//    changed = true;
+//    return this;
 }
 
 Component* Entity::getComponent(ComponentType *type){
@@ -139,6 +173,14 @@ void Entity::update(){ //TODO: Должно реализоваться в Compon
 //        components.erase(components.find(*it));
 //    }
 //    removedComponents.clear();
+}
+
+int Entity::lock(){
+    return pthread_mutex_lock( &mutex );
+}
+
+int Entity::unlock(){
+    return pthread_mutex_unlock( &mutex );
 }
 
 void Entity::addToWorld(){

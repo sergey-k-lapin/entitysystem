@@ -34,6 +34,9 @@ public:
     std::bitset<128> getComponetBits();
     std::unordered_set<Entity*> entitySet;
     void ApplyChanges();
+    void ApplyRemove();
+    void ApplyAdd();
+    
     unsigned int id;
 //    bool autoUpdate = false; 
     int Lock(pthread_mutex_t* mutex);

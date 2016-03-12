@@ -14,8 +14,10 @@ SyncSystem::~SyncSystem() {
 }
 
 void SyncSystem::process(){
+    ApplyRemove();
     for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
         this->processEntity(*it);
     }
-    this->ApplyChanges();
+    ApplyAdd();
+//    this->ApplyChanges();
 }

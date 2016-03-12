@@ -41,14 +41,7 @@ void System::DeleteEntity(Entity* e){
     removed.push_back(e);
 }
 
-void System::ApplyChanges() { 
-    while (!added.empty()){ //Process and add all new
-        Entity* e = added.front();
-        e->getSystemBits()->set(this->id);
-        this->processEntity(e);
-        entitySet.insert(e);
-        added.pop_front();
-    }
+void System::ApplyRemove() {
     while (!removed.empty()){
         Entity* e = removed.front();
         entitySet.erase(e); //Remove entity from system
@@ -56,6 +49,21 @@ void System::ApplyChanges() {
         world->getComponentManager()->addToChange( e );
         removed.pop_front();
     }
+};
+
+void System::ApplyAdd() {
+    while (!added.empty()){ //Process and add all new
+        Entity* e = added.front();
+        e->getSystemBits()->set(this->id);
+        this->processEntity(e);
+        entitySet.insert(e);
+        added.pop_front();
+    }
+};
+
+void System::ApplyChanges() {
+    ApplyRemove();
+    ApplyAdd();
 }
 
 //void System::InternalThreadEntry(){
