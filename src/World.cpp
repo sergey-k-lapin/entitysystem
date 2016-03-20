@@ -14,11 +14,11 @@ World::World() {
 //    cm = new ComponentManager( this );
     sm = new SystemManager( this );
     em = new EntityManager( this );
-    cm = new ComponentManager( this );
+//    cm = new ComponentManager( this );
 }
 
 World::~World() {
-    delete cm;
+//    delete cm;
     delete sm;
     delete em;
 }
