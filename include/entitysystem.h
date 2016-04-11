@@ -15,5 +15,6 @@
 #include <SystemManager.h>
 #include <EntityManager.h>
 #include <World.h>
+#include <AsyncComponent.h>
 
 #endif
