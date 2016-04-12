@@ -46,7 +46,7 @@ void System::ApplyRemove() {
         Entity* e = removed.front();
         entitySet.erase(e); //Remove entity from system
         e->getSystemBits()->reset(this->id); //Reset system bit
-        world->getComponentManager()->addToChange( e );
+        //world->getComponentManager()->addToChange( e );
         removed.pop_front();
     }
 };
