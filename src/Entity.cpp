@@ -167,7 +167,11 @@ Component* Entity::getComponent(ComponentType *type){
 }
 
 void Entity::update(){ //TODO: Должно реализоваться в ComponentManager
+    this->lock();
     (*changedComponentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
+     world->changeEntity( this );
+     this->reset();
+     this->unlock();    
 //    for (auto it = removedComponents.begin(); it != removedComponents.end(); ++it){
 ////        delete *it; //TODO: object manager...
 //        components.erase(components.find(*it));
