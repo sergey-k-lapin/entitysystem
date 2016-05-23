@@ -10,19 +10,21 @@
 
 #include <vector>
 #include <unordered_map>
-#include <ComponentManager.h>
+//#include <ComponentManager.h>
+
+#include <Context.h>
 
 class SystemManager;
 class Entity;
 class Manager;
 class EntityManager;
-class ComponentManager;
+//class ComponentManager;
 
 class World {
 public:
     World();
     virtual ~World();
-    ComponentManager* getComponentManager();
+//    ComponentManager* getComponentManager();
     SystemManager* getSystemManager();
     EntityManager* getEntityManager();
 
@@ -34,7 +36,19 @@ public:
 //private:
     SystemManager *sm;
     EntityManager *em;
-    ComponentManager *cm;
+//    ComponentManager *cm;
+    
+    Context* activeContext;
+    Context* visibleContext;
+    std::vector<Context*> contextList;
+    
+    Context* createContext();
+    std::unordered_set<Entity*>* getActiveEntitySet(System* system);
+    std::unordered_set<Entity*>* getVisibleEntitySet(System* system);
+    
+    void setActiveContext(Context* context);
+    void setVisibleContext(Context* context);
+    
 };
 
 #endif	/* WORLD_H */

@@ -14,6 +14,7 @@
 #include <map>
 #include <bitset>
 #include <unordered_map>
+#include <unordered_set>
 
 class World;
 
@@ -32,13 +33,13 @@ public:
     
     std::unordered_map<ComponentType*, std::bitset<128>*> SystemsForComponent; //TODO: Move to System manager
     void addSystemToComponetMap(System *sys, ComponentType *type);
+    std::unordered_map<int, System*> systems;
 
 private:
 //    std::map<ComponentType*, std::map<int, System*>*> systemsByComponents;
 //    std::unordered_multimap<std::bitset<128>, System*> systemsByComponentHash;
     World *world;
     std::bitset<128> componentsAcceptedByAllSystems;
-    std::unordered_map<int, System*> systems;
     
 };
 

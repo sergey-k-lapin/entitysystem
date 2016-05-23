@@ -6,8 +6,8 @@
  */
 
 #include "System.h"
-#include "SystemType.h"
-#include "EntityManager.h"
+//#include "SystemType.h"
+//#include "EntityManager.h"
 #include "SystemManager.h"
 
 //#include <unistd.h> //RMOVE
@@ -17,7 +17,14 @@ unsigned int System::_ID = 0;
 System::System(World* w) {
     this->world = w;
     this->id = ++_ID;
+    
+    //Create entity pool in active context
+    std::unordered_set<Entity*>* dataset = new std::unordered_set<Entity*>();
+    this->world->activeContext->values.insert(std::pair<System*, std::unordered_set<Entity*>*>( this, dataset ));
 
+    this->inEntitySet = dataset;
+    this->outEntitySet = dataset;
+//    this->updateContext();
 //    this->StartInternalThread();
 }
 
@@ -44,7 +51,7 @@ void System::DeleteEntity(Entity* e){
 void System::ApplyRemove() {
     while (!removed.empty()){
         Entity* e = removed.front();
-        entitySet.erase(e); //Remove entity from system
+        inEntitySet->erase(e); //Remove entity from system
         e->getSystemBits()->reset(this->id); //Reset system bit
         //world->getComponentManager()->addToChange( e );
         removed.pop_front();
@@ -56,7 +63,7 @@ void System::ApplyAdd() {
         Entity* e = added.front();
         e->getSystemBits()->set(this->id);
         this->processEntity(e);
-        entitySet.insert(e);
+        inEntitySet->insert(e);
         added.pop_front();
     }
 };
@@ -102,4 +109,12 @@ int System::Lock(pthread_mutex_t* mutex){
 }
 int System::Unlock(pthread_mutex_t* mutex){
     return pthread_mutex_unlock( mutex );
+}
+
+void System::UpdateInContext(){
+    this->inEntitySet = this->world->getActiveEntitySet(this);
+}
+
+void System::UpdateOutContext(){
+    this->outEntitySet = this->world->getVisibleEntitySet(this);    
 }

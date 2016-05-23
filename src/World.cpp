@@ -14,6 +14,9 @@ World::World() {
 //    cm = new ComponentManager( this );
     sm = new SystemManager( this );
     em = new EntityManager( this );
+    this->activeContext = new Context();
+    this->visibleContext = this->activeContext;
+    this->contextList.push_back(this->activeContext);
 //    cm = new ComponentManager( this );
 }
 
@@ -23,9 +26,9 @@ World::~World() {
     delete em;
 }
 
-ComponentManager* World::getComponentManager(){
-    return this->cm;
-}
+//ComponentManager* World::getComponentManager(){
+////    return this->cm;
+//}
 
 SystemManager* World::getSystemManager(){
     return this->sm;
@@ -91,6 +94,37 @@ void World::changeEntity(Entity *e){ //Move to System Manager
         }
     }
 }
+std::unordered_set<Entity*>* World::getActiveEntitySet(System* system){
+    return this->activeContext->values.find(system)->second;
+}
+std::unordered_set<Entity*>* World::getVisibleEntitySet(System* system){
+    return this->visibleContext->values.find(system)->second;    
+};
+
+Context* World::createContext(){
+    Context* ret = new Context();
+    for (auto it = this->sm->systems.begin(); it != this->sm->systems.end(); ++it ){
+        std::unordered_set<Entity*>* dataset = new std::unordered_set<Entity*>();
+        ret->values.insert(std::pair<System*, std::unordered_set<Entity*>*>( it->second, dataset ));        
+    }
+    this->contextList.push_back(ret); //Не уверен нужен ли этот список вообще
+    return ret;
+}
+
+void World::setActiveContext(Context* context){
+    this->activeContext = context;
+    for (auto it = this->sm->systems.begin(); it != this->sm->systems.end(); ++it ){
+        it->second->UpdateInContext();        
+    }    
+};
+
+void World::setVisibleContext(Context* context){
+    this->visibleContext = context;
+    for (auto it = this->sm->systems.begin(); it != this->sm->systems.end(); ++it ){
+        it->second->UpdateOutContext();        
+    }    
+};
+
 
 void World::deleteEntity(Entity *e){
     //TODO: Implement

@@ -19,11 +19,12 @@ AsyncSystem::~AsyncSystem(){
 void AsyncSystem::InternalThreadEntry(){
     while(true){
         pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
-        for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
+        std::unordered_set<Entity*>* currentOutEntitySet = outEntitySet;
+        for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end(); ++it){
             this->processEntity(*it);
         }
         this->ApplyChanges();
-        if ( entitySet.empty() && added.empty() && removed.empty() ){
+        if ( inEntitySet->empty() && added.empty() && removed.empty() ){
             pthread_mutex_lock(&my_mutex);
             pthread_cond_wait(&cond, &my_mutex);
             pthread_mutex_unlock(&my_mutex);
