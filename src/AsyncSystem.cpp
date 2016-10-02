@@ -35,7 +35,7 @@ void AsyncSystem::InternalThreadEntry(){
 }
 
 void AsyncSystem::AddEntity(Entity* e){
-    added.push_back(e);
+    System::AddEntity(e);
     //  pthread_mutex_lock(&my_mutex);
     pthread_cond_signal(&cond);
     //  pthread_mutex_unlock(&my_mutex);
