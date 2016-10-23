@@ -70,7 +70,7 @@ public:
     std::unordered_map<ComponentType*, Component*> components;
     std::bitset<128> addedComponentBits;
     
-    std::unordered_set<ComponentType*> removedComponents; //Must be depricated
+    std::unordered_set<Component*> removedComponents; //Must be depricated
     std::bitset<128> removedComponentBits; //Must be depricated
     
     std::vector<Component*> addComponents;

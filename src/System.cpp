@@ -44,6 +44,17 @@ void System::ApplyRemove() {
         Entity* e = removed.front();
         inEntitySet->erase(e); //Remove entity from system
         e->getSystemBits()->reset(this->id); //Reset system bit
+        e->lock();
+        for (auto it=e->removedComponents.begin(); it != e->removedComponents.end(); ++it) {
+            (*it)->usedInSystems.reset(this->id);
+//            std::cout << (*it)->usedInSystems << std::endl;
+            if ((*it)->usedInSystems.none()){
+//                std::cout << "Component can be deleted." << std::endl;
+                e->removeFromCurrent((*it));
+            }
+        }
+        e->removedComponents.clear();
+        e->unlock();
         //world->getComponentManager()->addToChange( e );
         removed.pop_front();
     }

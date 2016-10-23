@@ -22,6 +22,7 @@ EntityManager::~EntityManager() {
 void EntityManager::InternalThreadEntry(){
     while (true){
         //For each changed entity
+//        printf("Change queue size: %i\n", changed.size());
         while ( !changed.empty() ){
             Entity* e = changed.front();
 //            e->lock();
@@ -31,6 +32,7 @@ void EntityManager::InternalThreadEntry(){
 //            e->unlock();
             changed.pop_front();
         }
+//        printf("Change done.\n");
         pthread_mutex_lock(&my_mutex);
         pthread_cond_wait(&cond, &my_mutex);
         pthread_mutex_unlock(&my_mutex);

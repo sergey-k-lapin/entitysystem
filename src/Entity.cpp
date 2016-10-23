@@ -84,7 +84,7 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
     } else if (removedComponentBits.test(type->getIndex())) { //If mark as removeed, replace with new.
         components[type] = component; //Replace;
         removedComponentBits.reset( type->getIndex());
-        removedComponents.erase(removedComponents.find(type));
+        removedComponents.erase(removedComponents.find(component));
 //        unlock(); //Unlock entity
         return this;
     } else {
@@ -137,7 +137,8 @@ Entity* Entity::removeComponent(Component* component,ComponentType* type){
 //    lock();
     if ( componentBits->test(type->getIndex())) {
         removedComponentBits.set( type->getIndex());
-        removedComponents.insert( type );
+//        removedComponents.insert( type );
+        removedComponents.insert( component );
 //        unlock();
         return this;
     } else {

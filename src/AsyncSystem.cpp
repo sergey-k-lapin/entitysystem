@@ -9,6 +9,7 @@
 #include <AsyncSystem.h>
 
 AsyncSystem::AsyncSystem(World *w):System(w){
+    
     //this->StartInternalThread();
 }
 
