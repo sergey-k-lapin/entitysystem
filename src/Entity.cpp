@@ -112,6 +112,7 @@ Entity* Entity::removeFromCurrent(Component *component){ //Remove
     auto c = components.find(type);
     if (c != components.end()){
         components.erase(c);
+        delete component;
     }
     return this;
 }
