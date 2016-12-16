@@ -5,18 +5,16 @@
  * Created on 27 апреля 2015 г., 22:48
  */
 
-#include "System.h"
+#include <System.h>
 //#include "SystemType.h"
 //#include "EntityManager.h"
-#include "SystemManager.h"
-
 //#include <unistd.h> //RMOVE
 
 unsigned int System::_ID = 0;
 
 System::System(World* w) {
     this->world = w;
-    this->id = ++_ID;
+    this->id = _ID++;
     
     //Create entity pool in active context
     std::unordered_set<Entity*>* dataset = new std::unordered_set<Entity*>();
@@ -45,15 +43,24 @@ void System::ApplyRemove() {
         inEntitySet->erase(e); //Remove entity from system
         e->getSystemBits()->reset(this->id); //Reset system bit
         e->lock();
-        for (auto it=e->removedComponents.begin(); it != e->removedComponents.end(); ++it) {
-            (*it)->usedInSystems.reset(this->id);
-//            std::cout << (*it)->usedInSystems << std::endl;
-            if ((*it)->usedInSystems.none()){
-//                std::cout << "Component can be deleted." << std::endl;
-                e->removeFromCurrent((*it));
+        std::cout << "System id: " << this->id << std::endl;
+        for (auto it=e->removedComponents.begin(); it != e->removedComponents.end();) {
+            
+            if ((*it)->usedInSystems.test(this->id)) {
+                std::cout << "Check bits: " << (*it)->usedInSystems << std::endl;
+                (*it)->usedInSystems.reset(this->id);
+                std::cout << "Bits left:" << (*it)->usedInSystems << std::endl;
+                if ((*it)->usedInSystems.none()){
+                                    std::cout << "Component can be deleted." << std::endl;
+                    e->removeFromCurrent((*it));
+                }
+                it = e->removedComponents.erase(it);                
+            } else {
+                ++it;
             }
+            
         }
-        e->removedComponents.clear();
+//        e->removedComponents.clear();
         e->unlock();
         //world->getComponentManager()->addToChange( e );
         removed.pop_front();
@@ -99,11 +106,11 @@ void System::AcceptComponentType(ComponentType *type){
     world->sm->addSystemToComponetMap(this, type);
 }
 
-std::bitset<128> System::getComponetBits(){
+ComponentsBitset System::getComponetBits(){
     return this->componentBits;
 }
 
-bool System::CompatibleWithConponents(std::bitset<128>* componentVector){
+bool System::CompatibleWithConponents(ComponentsBitset* componentVector){
     return ( (this->componentBits & *componentVector) ==  this->componentBits);
 }
 int System::Lock(pthread_mutex_t* mutex){

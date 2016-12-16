@@ -25,13 +25,13 @@ public:
     virtual ~SystemManager();
     void registerSystem(System *sys);
 //    int addEntityWithNewComponentVector(Entity *e); //TODO: Remove to comtonent manager
-    void addSystemWithComponentBits(System* sys, std::bitset<128>* componentBits);
+    void addSystemWithComponentBits(System* sys, ComponentsBitset* componentBits);
     std::map<int, System*>* getSystemsByComponentType(ComponentType* type);
-    std::bitset<128>* getComponentsAcceptedByAllSystems();
-    std::unordered_map<std::bitset<128>, std::vector<System*>*> systemsByComponentHash;
+    ComponentsBitset* getComponentsAcceptedByAllSystems();
+    std::unordered_map<ComponentsBitset, std::vector<System*>*> systemsByComponentHash;
     std::unordered_map<int, System*> *getSystems();
     
-    std::unordered_map<ComponentType*, std::bitset<128>*> SystemsForComponent; //TODO: Move to System manager
+    std::unordered_map<ComponentType*, SystemsBitset*> SystemsForComponent; //TODO: Move to System manager
     void addSystemToComponetMap(System *sys, ComponentType *type);
     std::unordered_map<int, System*> systems;
 
@@ -39,7 +39,7 @@ private:
 //    std::map<ComponentType*, std::map<int, System*>*> systemsByComponents;
 //    std::unordered_multimap<std::bitset<128>, System*> systemsByComponentHash;
     World *world;
-    std::bitset<128> componentsAcceptedByAllSystems;
+    ComponentsBitset componentsAcceptedByAllSystems;
     
 };
 

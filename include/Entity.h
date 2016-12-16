@@ -8,7 +8,9 @@
 #ifndef ENTITY_H
 #define	ENTITY_H
 
-#include <bitset>
+
+#include <config.h>
+//#include <bitset>
 #include <vector>
 #include <unordered_set>
 #include "ComponentType.h"
@@ -26,8 +28,8 @@ public:
     Entity(World *world);
     virtual ~Entity();    
     int getId();
-    std::bitset<128> *getComponentBits();
-    std::bitset<128> *getSystemBits();
+    ComponentsBitset *getComponentBits();
+    SystemsBitset *getSystemBits();
     bool isActive();
     bool isEnabled();
     template <typename c>
@@ -64,14 +66,14 @@ public:
     int unlock();
     void addToChange();
 
-    std::bitset<128> *componentBits;
-    std::bitset<128> *changedComponentBits;
+    ComponentsBitset *componentBits;
+    ComponentsBitset *changedComponentBits;
     
     std::unordered_map<ComponentType*, Component*> components;
-    std::bitset<128> addedComponentBits;
+    ComponentsBitset addedComponentBits;
     
     std::unordered_set<Component*> removedComponents; //Must be depricated
-    std::bitset<128> removedComponentBits; //Must be depricated
+    ComponentsBitset removedComponentBits; //Must be depricated
     
     std::vector<Component*> addComponents;
     std::unordered_map<ComponentType*, Component*> removeComponents;
@@ -84,7 +86,7 @@ private:
     ComponentManager *componentManager;
     int id;
     static int INDEX;
-    std::bitset<128> *systemBits;
+    SystemsBitset *systemBits;
     World *world;
 };
 

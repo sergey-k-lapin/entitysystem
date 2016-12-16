@@ -15,8 +15,10 @@
 #include <deque>
 //#include "Thread.h"
 
-#include "Entity.h"
-#include "ComponentType.h"
+#include <Entity.h>
+#include <ComponentType.h>
+#include <SystemManager.h>
+
 //#include "SystemType.h"
 //#include "EntityManager.h"
 //#include "SystemManager.h"
@@ -39,8 +41,8 @@ public:
     void AcceptComponentType(ComponentType* type);
     virtual void AddEntity(Entity* e);
     virtual void DeleteEntity(Entity* e);
-    bool CompatibleWithConponents(std::bitset<128>* componentVector);
-    std::bitset<128> getComponetBits();
+    bool CompatibleWithConponents(ComponentsBitset* componentVector);
+    ComponentsBitset getComponetBits();
 //    std::unordered_set<Entity*> entitySet;
     std::unordered_set<Entity*>* outEntitySet;
     std::unordered_set<Entity*>* inEntitySet;
@@ -61,7 +63,7 @@ protected:
 //    pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
 //    pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
     static unsigned int _ID;
-    std::bitset<128> componentBits;
+    ComponentsBitset componentBits;
     World* world;
     std::deque<Entity*> added;
     std::deque<Entity*> removed;

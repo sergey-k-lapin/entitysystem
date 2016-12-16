@@ -14,9 +14,9 @@
 //#include <deque>
 #include <unordered_set>
 #include <bitset>
-#include "Entity.h"
+#include <Entity.h>
 #include <World.h>
-#include "EntityManager.h"
+#include <EntityManager.h>
 
 
 class World;

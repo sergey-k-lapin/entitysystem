@@ -66,13 +66,17 @@ void World::changeEntity(Entity *e){ //Move to System Manager
     enabledSystems.reset();
     //Take a systems
     auto systemRange = sm->systemsByComponentHash.find(*e->componentBits);
+//    std::cout << "Component bits " << *e->componentBits << std::endl;
+//    std::cout << "Changed component bits " << *e->changedComponentBits << std::endl;
     //If result is not empty
     if ( systemRange != sm->systemsByComponentHash.end()){
+//        std::cout << "Size of system vector " << systemRange->second->size() << " for component bits " << *e->componentBits << std::endl;
         //Check for compatibility
         for (auto s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
             //If current system is not compatible with entity
             if (!(*s)->CompatibleWithConponents(e->changedComponentBits)){
                 //Remove entity from system
+                std::cout << "Remove from system: " << (*s) << " with ID " << (*s)->id << std::endl;
                 (*s)->DeleteEntity(e);
             } else {
                 //Dont delete entity from system and set bit
@@ -80,17 +84,34 @@ void World::changeEntity(Entity *e){ //Move to System Manager
             };
         }
     }
-    //Try to add Entity as new one
-    for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
-        //Check bits
-        if ( system->second->CompatibleWithConponents( e->changedComponentBits ) ){
-            //If not present in system
-            if ( !enabledSystems.test(system->second->id) ) {
-                //Add entyty to system
-                system->second->AddEntity(e);
+    //Try to fing existing set
+    systemRange = sm->systemsByComponentHash.find(*e->changedComponentBits);
+    //if exists
+    if ( systemRange != sm->systemsByComponentHash.end()){
+        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
+            //Check bits
+            if ( system->second->CompatibleWithConponents( e->changedComponentBits ) ){
+                //If not present in system
+                if ( !enabledSystems.test(system->second->id) ) {
+                    //Add entyty to system
+                    system->second->AddEntity(e);
+                }
             }
-            //Add system to accept list
-            sm->addSystemWithComponentBits(system->second, e->changedComponentBits);
+        }
+    } else {
+        //Try to add Entity as new one
+        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
+            //Check bits
+            if ( system->second->CompatibleWithConponents( e->changedComponentBits ) ){
+                //If not present in system
+                if ( !enabledSystems.test(system->second->id) ) {
+                    //Add entyty to system
+                    system->second->AddEntity(e);
+                }
+                //Add system to accept list
+//                std::cout << "Add entity with component bits " << *e->changedComponentBits << " to system " << system->second->id << std::endl;
+                sm->addSystemWithComponentBits(system->second, e->changedComponentBits);
+            }
         }
     }
 }

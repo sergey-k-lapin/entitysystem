@@ -8,6 +8,7 @@
 
 #ifndef gamedemo_entitysystem_h
 #define gamedemo_entitysystem_h
+#include <config.h>
 #include <Entity.h>
 #include <System.h>
 #include <AsyncSystem.h>

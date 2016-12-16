@@ -8,7 +8,7 @@
 #ifndef COMPONENTTYPE_H
 #define	COMPONENTTYPE_H
 
-#include "Component.h"
+#include <Component.h>
 #include <typeinfo>
 #include <map>
 #include <iostream>

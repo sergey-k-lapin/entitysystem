@@ -17,7 +17,7 @@ SystemManager::~SystemManager() {
 
 void SystemManager::registerSystem(System *sys) {
     //Cache bitset
-    std::bitset<128> componentBits = sys->getComponetBits();
+    ComponentsBitset componentBits = sys->getComponetBits();
     // Find compatible systems
     for (auto systemIterator = systemsByComponentHash.begin(); systemIterator != systemsByComponentHash.end(); ++systemIterator){
         if (systemIterator->first.count() > componentBits.count()){
@@ -36,28 +36,29 @@ void SystemManager::registerSystem(System *sys) {
     systems.insert(std::pair<int, System*>(sys->id, sys));
 }
 
-void SystemManager::addSystemWithComponentBits(System* sys, std::bitset<128>* componentBits){
+void SystemManager::addSystemWithComponentBits(System* sys, ComponentsBitset* componentBits){
     auto systemsForComponents = systemsByComponentHash.find(*componentBits);
     if (systemsForComponents != systemsByComponentHash.end()){
         systemsForComponents->second->push_back(sys);
     } else {
         std::vector<System*>* newSystems = new std::vector<System*>();
         newSystems->push_back(sys);
-        systemsByComponentHash.insert(std::pair<std::bitset<128>, std::vector<System*>*>(*componentBits, newSystems));
+        systemsByComponentHash.insert(std::pair<ComponentsBitset, std::vector<System*>*>(*componentBits, newSystems));
     }
 
 }
 
 void SystemManager::addSystemToComponetMap(System *sys, ComponentType *type){
     auto it = this->SystemsForComponent.find(type); //Find System bits for component type
-    std::bitset<128> *systems; //System bits
+    SystemsBitset *systems; //System bits
     if (it == this->SystemsForComponent.end()){ //If not found
-        systems = new std::bitset<128>(); //Create new bitset
-        SystemsForComponent.insert(std::pair<ComponentType*, std::bitset<128>*>(type, systems));
+        systems = new SystemsBitset(); //Create new bitset
+        SystemsForComponent.insert(std::pair<ComponentType*, SystemsBitset*>(type, systems));
     } else {
         systems = it->second;
     }
     systems->set(sys->id);
+//    std::cout << "Componetn index " << type->getIndex() << " " << *systems << std::endl;
     
 }
 
@@ -66,7 +67,7 @@ void SystemManager::addSystemToComponetMap(System *sys, ComponentType *type){
 //    return (*sysMap).second;
 //}
 
-std::bitset<128>* SystemManager::getComponentsAcceptedByAllSystems(){
+ComponentsBitset* SystemManager::getComponentsAcceptedByAllSystems(){
     return &componentsAcceptedByAllSystems;
 }
 

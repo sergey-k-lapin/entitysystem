@@ -5,7 +5,6 @@
  * Created on 22 Сентябрь 2014 г., 22:14
  */
 
-#include <unordered_set>
 
 #include "Entity.h"
 #include "EntityManager.h"
@@ -13,17 +12,17 @@
 
 int Entity::INDEX = 0;
 
-Entity::Entity() {
-    systemBits = new std::bitset<128>();
-    changed = false;    
-}
+//Entity::Entity() {
+//    systemBits = new std::bitset<128>();
+//    changed = false;    
+//}
 
 Entity::Entity(World *world) {
     this->world = world;
 	this->id = INDEX++;
-	systemBits = new std::bitset<128>();
-	componentBits = new std::bitset<128>();
-    changedComponentBits = new std::bitset<128>();
+	systemBits = new SystemsBitset();
+	componentBits = new ComponentsBitset();
+    changedComponentBits = new ComponentsBitset();
     
     //Create recursive mutex
     pthread_mutexattr_init(&mutexAttr);
@@ -44,11 +43,11 @@ int Entity::getId() {
         return this->id;
 }
 
-std::bitset<128>* Entity::getComponentBits(){
+ComponentsBitset *Entity::getComponentBits(){
     return componentBits;
 }
 
-std::bitset<128> *Entity::getSystemBits(){
+SystemsBitset *Entity::getSystemBits(){
     return this->systemBits;
 }
 
@@ -77,6 +76,7 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
         if (it == this->world->sm->SystemsForComponent.end()){ //If not found
             std::cout << "Warning: Systems for component type "<< type->index << " not found." << std::endl;
         } else {
+//            std::cout << "component "<< type->getIndex() <<" use in systems " << *it->second << std::endl;
             component->usedInSystems = *it->second;
         }
 //        world->getEntityManager()->addToChange( this ); //Add Entity to change queue
@@ -126,8 +126,9 @@ Entity * Entity::removeComponent(ComponentType* type) {
     auto it = components.find( type );
     if (it != components.end()) {
         removeComponent(it->second, it->first);
+        return this;
     }
-    return this;
+    return NULL;
 }
 
 void Entity::addToChange() {
