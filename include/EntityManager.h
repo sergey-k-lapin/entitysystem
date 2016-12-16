@@ -8,9 +8,8 @@
 #ifndef ENTITYMANAGER_H
 #define	ENTITYMANAGER_H
 
-//#include <unordered_set>
 #include <deque>
-#include "Thread.h"
+#include <Thread.h>
 
 class World;
 class Entity;
@@ -19,8 +18,8 @@ class EntityManager:public Thread{
 public:
     EntityManager(World *w);
     virtual ~EntityManager();
-//    void applyChanges();
     void addToChange(Entity* e);
+
 private:
     World* world;
     std::deque<Entity*> changed;

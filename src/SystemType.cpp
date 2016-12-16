@@ -5,7 +5,7 @@
  * Created on 1 мая 2015 г., 14:28
  */
 
-#include "SystemType.h"
+#include <SystemType.h>
 
 int SystemType::ID = 1;
 std::map<const std::type_info*, int, type_info_comparator2> SystemType::systemTypes;

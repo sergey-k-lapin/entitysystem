@@ -5,7 +5,7 @@
  * Created on 27 Сентябрь 2014 г., 12:14
  */
 
-#include "ComponentType.h"
+#include <ComponentType.h>
 
 int ComponentType::INDEX = 0;
 std::map <const std::type_info*, ComponentType*, type_info_comparator> ComponentType::componentTypes;

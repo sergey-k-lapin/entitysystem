@@ -10,11 +10,10 @@
 
 
 #include <config.h>
-//#include <bitset>
 #include <vector>
 #include <unordered_set>
-#include "ComponentType.h"
-#include "World.h"
+#include <ComponentType.h>
+#include <World.h>
 
 class Component;
 class ComponentType;
@@ -83,7 +82,6 @@ public:
     pthread_mutexattr_t mutexAttr;
 
 private:
-    ComponentManager *componentManager;
     int id;
     static int INDEX;
     SystemsBitset *systemBits;

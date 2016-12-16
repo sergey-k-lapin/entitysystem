@@ -10,7 +10,6 @@
 
 AsyncSystem::AsyncSystem(World *w):System(w){
     
-    //this->StartInternalThread();
 }
 
 AsyncSystem::~AsyncSystem(){

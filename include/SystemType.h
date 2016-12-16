@@ -9,7 +9,7 @@
 #define	SYSTEMTYPE_H
 #include <map>
 #include <typeinfo>
-#include "System.h"
+#include <System.h>
 
 struct type_info_comparator2 {
   bool operator ()(const std::type_info* a, const std::type_info* b) const {

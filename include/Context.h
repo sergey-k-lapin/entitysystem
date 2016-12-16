@@ -9,9 +9,7 @@
 #define	CONTEXT_H
 #include <unordered_map>
 #include <unordered_set>
-//#include <System.h>
-//#include <Entity.h>
-//
+
 class System;
 class Entity;
 class Context{

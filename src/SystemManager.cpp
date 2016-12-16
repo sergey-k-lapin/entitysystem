@@ -5,8 +5,8 @@
  * Created on 1 мая 2015 г., 10:32
  */
 
-#include "SystemManager.h"
-#include "World.h"
+#include <SystemManager.h>
+#include <World.h>
 
 SystemManager::SystemManager(World *w) {
     this->world = w;
@@ -58,14 +58,7 @@ void SystemManager::addSystemToComponetMap(System *sys, ComponentType *type){
         systems = it->second;
     }
     systems->set(sys->id);
-//    std::cout << "Componetn index " << type->getIndex() << " " << *systems << std::endl;
-    
 }
-
-//std::map<int, System*>* SystemManager::getSystemsByComponentType(ComponentType* type){
-//    std::map<ComponentType*, std::map<int, System*>*>::iterator sysMap = systemsByComponents.find(type);
-//    return (*sysMap).second;
-//}
 
 ComponentsBitset* SystemManager::getComponentsAcceptedByAllSystems(){
     return &componentsAcceptedByAllSystems;

@@ -6,16 +6,11 @@
  */
 
 
-#include "Entity.h"
-#include "EntityManager.h"
-#include "SystemManager.h"
+#include <Entity.h>
+#include <EntityManager.h>
+#include <SystemManager.h>
 
 int Entity::INDEX = 0;
-
-//Entity::Entity() {
-//    systemBits = new std::bitset<128>();
-//    changed = false;    
-//}
 
 Entity::Entity(World *world) {
     this->world = world;

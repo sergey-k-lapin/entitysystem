@@ -10,7 +10,6 @@
 
 #include <vector>
 #include <unordered_map>
-//#include <ComponentManager.h>
 
 #include <Context.h>
 
@@ -18,13 +17,11 @@ class SystemManager;
 class Entity;
 class Manager;
 class EntityManager;
-//class ComponentManager;
 
 class World {
 public:
     World();
     virtual ~World();
-//    ComponentManager* getComponentManager();
     SystemManager* getSystemManager();
     EntityManager* getEntityManager();
 
@@ -35,9 +32,7 @@ public:
     void disable(Entity *e);
 //private:
     SystemManager *sm;
-    EntityManager *em;
-//    ComponentManager *cm;
-    
+    EntityManager *em;    
     Context* activeContext;
     Context* visibleContext;
     std::vector<Context*> contextList;

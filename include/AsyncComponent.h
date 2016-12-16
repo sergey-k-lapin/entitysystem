@@ -14,4 +14,4 @@ class AsyncComponent:public Component {
 public:
     pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 };
-#endif//
+#endif

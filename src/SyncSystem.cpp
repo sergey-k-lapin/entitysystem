@@ -19,5 +19,4 @@ void SyncSystem::process(){
         this->processEntity(*it);
     }
     ApplyAdd();
-//    this->ApplyChanges();
 }

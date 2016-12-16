@@ -34,15 +34,11 @@ void* Thread::InternalThreadEntryFunc(void * This){
 int Thread::CancelInternalThread(){
     int err = pthread_cancel(_thread);
     if (err != ESRCH) {
-//        std::cout << "Stop thread "<< _thread << std::endl;
         void *res;
         err = pthread_join(_thread, &res);
 //        if (res == PTHREAD_CANCELED) {
 //            printf("Thread was canceled\n");
 //        }
     }
-//    else {
-//        std::cout << "Thread " << _thread <<" not found."<< std::endl;
-//    }
     return err;
 }

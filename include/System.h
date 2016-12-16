@@ -8,20 +8,13 @@
 #ifndef SYSTEM_H
 #define	SYSTEM_H
 
-//#include <map>
-//#include <vector>
 #include <bitset>
 #include <unordered_set>
 #include <deque>
-//#include "Thread.h"
 
 #include <Entity.h>
 #include <ComponentType.h>
 #include <SystemManager.h>
-
-//#include "SystemType.h"
-//#include "EntityManager.h"
-//#include "SystemManager.h"
 
 class World;
 class SystemType;
@@ -43,7 +36,6 @@ public:
     virtual void DeleteEntity(Entity* e);
     bool CompatibleWithConponents(ComponentsBitset* componentVector);
     ComponentsBitset getComponetBits();
-//    std::unordered_set<Entity*> entitySet;
     std::unordered_set<Entity*>* outEntitySet;
     std::unordered_set<Entity*>* inEntitySet;
 
@@ -52,16 +44,12 @@ public:
     void ApplyAdd();
     
     unsigned int id;
-//    bool autoUpdate = false; 
     int Lock(pthread_mutex_t* mutex);
     int Unlock(pthread_mutex_t* mutex);
     void UpdateInContext();
     void UpdateOutContext();
     
 protected:
-//    void InternalThreadEntry();
-//    pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
-//    pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
     static unsigned int _ID;
     ComponentsBitset componentBits;
     World* world;

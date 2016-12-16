@@ -6,9 +6,6 @@
  */
 
 #include <System.h>
-//#include "SystemType.h"
-//#include "EntityManager.h"
-//#include <unistd.h> //RMOVE
 
 unsigned int System::_ID = 0;
 
@@ -22,8 +19,6 @@ System::System(World* w) {
 
     this->inEntitySet = dataset;
     this->outEntitySet = dataset;
-//    this->updateContext();
-//    this->StartInternalThread();
 }
 
 System::~System() {
@@ -43,26 +38,19 @@ void System::ApplyRemove() {
         inEntitySet->erase(e); //Remove entity from system
         e->getSystemBits()->reset(this->id); //Reset system bit
         e->lock();
-        std::cout << "System id: " << this->id << std::endl;
         for (auto it=e->removedComponents.begin(); it != e->removedComponents.end();) {
             
             if ((*it)->usedInSystems.test(this->id)) {
-                std::cout << "Check bits: " << (*it)->usedInSystems << std::endl;
                 (*it)->usedInSystems.reset(this->id);
-                std::cout << "Bits left:" << (*it)->usedInSystems << std::endl;
                 if ((*it)->usedInSystems.none()){
-                                    std::cout << "Component can be deleted." << std::endl;
                     e->removeFromCurrent((*it));
                 }
                 it = e->removedComponents.erase(it);                
             } else {
                 ++it;
             }
-            
         }
-//        e->removedComponents.clear();
         e->unlock();
-        //world->getComponentManager()->addToChange( e );
         removed.pop_front();
     }
 };
@@ -81,25 +69,6 @@ void System::ApplyChanges() {
     ApplyRemove();
     ApplyAdd();
 }
-
-//void System::InternalThreadEntry(){
-//    while(true){
-////        std::cout << typeid(*this).name() << std::endl;
-////        std::cout << "Process " << entitySet.size() << std::endl;
-//
-//        for (auto it = entitySet.begin(); it != entitySet.end(); ++it){
-//            this->processEntity(*it);
-////            sleep(1);
-//        }
-//        this->ApplyChanges();
-//        if ( entitySet.empty() && added.empty() && removed.empty() ){
-//            pthread_mutex_lock(&my_mutex);
-////            std::cout << typeid(*this).name() << " is waiting." << std::endl;
-//            pthread_cond_wait(&cond, &my_mutex);
-//            pthread_mutex_unlock(&my_mutex);        
-//        }
-//    }
-//}
 
 void System::AcceptComponentType(ComponentType *type){
     this->componentBits.set(type->getIndex());

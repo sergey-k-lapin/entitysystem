@@ -5,30 +5,22 @@
  * Created on 28 Сентябрь 2014 г., 14:25
  */
 
-#include "World.h"
-//#include "ComponentManager.h"
-#include "SystemManager.h"
-#include "EntityManager.h"
+#include <World.h>
+#include <SystemManager.h>
+#include <EntityManager.h>
 
 World::World() {
-//    cm = new ComponentManager( this );
     sm = new SystemManager( this );
     em = new EntityManager( this );
     this->activeContext = new Context();
     this->visibleContext = this->activeContext;
     this->contextList.push_back(this->activeContext);
-//    cm = new ComponentManager( this );
 }
 
 World::~World() {
-//    delete cm;
     delete sm;
     delete em;
 }
-
-//ComponentManager* World::getComponentManager(){
-////    return this->cm;
-//}
 
 SystemManager* World::getSystemManager(){
     return this->sm;
@@ -62,21 +54,17 @@ void World::addEntity(Entity *e){ //Move to System Manager
     //Add entity to list
 }
 void World::changeEntity(Entity *e){ //Move to System Manager
-    std::bitset<128> enabledSystems;
+    SystemsBitset enabledSystems;
     enabledSystems.reset();
     //Take a systems
     auto systemRange = sm->systemsByComponentHash.find(*e->componentBits);
-//    std::cout << "Component bits " << *e->componentBits << std::endl;
-//    std::cout << "Changed component bits " << *e->changedComponentBits << std::endl;
     //If result is not empty
     if ( systemRange != sm->systemsByComponentHash.end()){
-//        std::cout << "Size of system vector " << systemRange->second->size() << " for component bits " << *e->componentBits << std::endl;
         //Check for compatibility
         for (auto s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
             //If current system is not compatible with entity
             if (!(*s)->CompatibleWithConponents(e->changedComponentBits)){
                 //Remove entity from system
-                std::cout << "Remove from system: " << (*s) << " with ID " << (*s)->id << std::endl;
                 (*s)->DeleteEntity(e);
             } else {
                 //Dont delete entity from system and set bit
@@ -109,7 +97,6 @@ void World::changeEntity(Entity *e){ //Move to System Manager
                     system->second->AddEntity(e);
                 }
                 //Add system to accept list
-//                std::cout << "Add entity with component bits " << *e->changedComponentBits << " to system " << system->second->id << std::endl;
                 sm->addSystemWithComponentBits(system->second, e->changedComponentBits);
             }
         }
