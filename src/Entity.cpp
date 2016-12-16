@@ -79,7 +79,8 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
     } else if (removedComponentBits.test(type->getIndex())) { //If mark as removeed, replace with new.
         components[type] = component; //Replace;
         removedComponentBits.reset( type->getIndex());
-        removedComponents.erase(removedComponents.find(component));
+        std::cout << "Component replaced " << component << std::endl;
+//        removedComponents.erase(removedComponents.find(component));
 //        unlock(); //Unlock entity
         return this;
     } else {
