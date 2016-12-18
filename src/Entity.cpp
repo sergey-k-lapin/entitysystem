@@ -19,6 +19,9 @@ Entity::Entity(World *world) {
 	componentBits = new ComponentsBitset();
     changedComponentBits = new ComponentsBitset();
     
+    disabledComponetBits = new ComponentsBitset();
+    disabledComponetBits->set();
+    
     //Create recursive mutex
     pthread_mutexattr_init(&mutexAttr);
     pthread_mutexattr_settype(&mutexAttr, PTHREAD_MUTEX_RECURSIVE);
@@ -29,10 +32,22 @@ Entity::Entity(World *world) {
 
 Entity::~Entity() {
     reset();
+    delete disabledComponetBits;
     delete componentBits;
     delete changedComponentBits;
     delete systemBits;
 }
+
+Entity* Entity::disableComponent(ComponentType* type){
+    disabledComponetBits->reset(type->getIndex());
+    return this;
+};
+
+Entity* Entity::enableComponent(ComponentType* type){
+    disabledComponetBits->set(type->getIndex());
+    return this;
+};
+
 
 int Entity::getId() {
         return this->id;

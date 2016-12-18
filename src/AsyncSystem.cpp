@@ -17,13 +17,18 @@ AsyncSystem::~AsyncSystem(){
 }
 
 void AsyncSystem::InternalThreadEntry(){
+    ComponentsBitset disabled;
     while(true){
         pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
         std::unordered_set<Entity*>* currentOutEntitySet = outEntitySet;
         for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end();){
-            
+
+            disabled =  ~*(*it)->disabledComponetBits & *(*it)->componentBits;
+
             if (this->CompatibleWithConponents((*it)->componentBits)){
-                this->processEntity(*it);
+                if ( disabled.none() ) {
+                    this->processEntity(*it);
+                }
                 ++it;
             } else {
                 std::cout << "Remove entity " << (*it) << " from " << this << std::endl;

@@ -23,7 +23,7 @@ class ComponentManager;
 
 class Entity {
 public:
-    Entity();
+//    Entity();
     Entity(World *world);
     virtual ~Entity();    
     int getId();
@@ -58,6 +58,18 @@ public:
     Entity* removeComponent(ComponentType* type);
     Entity* removeComponent(Component* component, ComponentType* type);
     
+    template <typename c>    
+    Entity* disableComponent(){
+        return this->disableComponent(ComponentType::getTypeFor<c>());
+    };
+    Entity* disableComponent(ComponentType* type);
+
+    template <typename c>
+    Entity* enableComponent(){
+        return this->enableComponent(ComponentType::getTypeFor<c>());
+    };
+    Entity* enableComponent(ComponentType* type);
+    
     void update();
     void reset();
     
@@ -67,6 +79,8 @@ public:
 
     ComponentsBitset *componentBits;
     ComponentsBitset *changedComponentBits;
+
+    ComponentsBitset *disabledComponetBits;
     
     std::unordered_map<ComponentType*, Component*> components;
     ComponentsBitset addedComponentBits;

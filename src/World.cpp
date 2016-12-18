@@ -56,14 +56,17 @@ void World::addEntity(Entity *e){ //DEPRICATED!
 void World::changeEntity(Entity *e){ //Move to System Manager
     SystemsBitset enabledSystems;
     enabledSystems.reset();
+//    ComponentsBitset  resultComponentBits = *e->componentBits & *e->disabledComponetBits;
+    ComponentsBitset  resultComponentBits = *e->componentBits & *e->disabledComponetBits;
+
 //    Take a systems
-    auto systemRange = sm->systemsByComponentHash.find(*e->componentBits);
+    auto systemRange = sm->systemsByComponentHash.find(resultComponentBits);
     //If result is not empty
     if ( systemRange != sm->systemsByComponentHash.end()){
         //Check for compatibility
         for (auto s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
             //If current system is not compatible with entity
-            if (!(*s)->CompatibleWithConponents(e->changedComponentBits)){
+            if (!(*s)->CompatibleWithConponents(&resultComponentBits)){
                 //Remove entity from system
 //                (*s)->DeleteEntity(e);
                 e->systemBits->reset((*s)->id); //Unmark system
@@ -76,13 +79,13 @@ void World::changeEntity(Entity *e){ //Move to System Manager
         }
     }
     //Try to fing existing set
-    systemRange = sm->systemsByComponentHash.find(*e->changedComponentBits);
+    systemRange = sm->systemsByComponentHash.find(resultComponentBits);
     //if exists
     if ( systemRange != sm->systemsByComponentHash.end()){
 //        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
         for (auto s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
             //Check bits
-            if ( (*s)->CompatibleWithConponents( e->changedComponentBits ) ){
+            if ( (*s)->CompatibleWithConponents( &resultComponentBits ) ){
                 //If not present in system
 //                if ( !enabledSystems.test(system->second->id) ) {
                 if ( !e->systemBits->test((*s)->id) ) {
@@ -95,7 +98,7 @@ void World::changeEntity(Entity *e){ //Move to System Manager
         //Try to add Entity as new one and build new set
         for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
             //Check bits
-            if ( system->second->CompatibleWithConponents( e->changedComponentBits ) ){
+            if ( system->second->CompatibleWithConponents( &resultComponentBits ) ){
                 //If not present in system
                 if ( !e->systemBits->test(system->second->id) ) {
 //                if ( !enabledSystems.test(system->second->id) ) {
@@ -103,7 +106,7 @@ void World::changeEntity(Entity *e){ //Move to System Manager
                     system->second->AddEntity(e);
                 }
                 //Add system to accept list
-                sm->addSystemWithComponentBits(system->second, e->changedComponentBits);
+                sm->addSystemWithComponentBits(system->second, &resultComponentBits);
             }
         }
     }
