@@ -14,9 +14,15 @@ SyncSystem::~SyncSystem() {
 }
 
 void SyncSystem::process(){
-    ApplyRemove();
-    for (auto it = outEntitySet->begin(); it != outEntitySet->end(); ++it){
-        this->processEntity(*it);
+//    ApplyRemove();
+    for (auto it = outEntitySet->begin(); it != outEntitySet->end();){
+        if (this->CompatibleWithConponents((*it)->componentBits)){
+            this->processEntity(*it);
+            ++it;
+        } else {
+            std::cout << "Remove entity " << (*it) << " from " << this << std::endl;
+            it = outEntitySet->erase(it);
+        }
     }
 //    ApplyAdd();
 }

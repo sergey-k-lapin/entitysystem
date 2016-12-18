@@ -30,7 +30,7 @@ EntityManager* World::getEntityManager(){
     return this->em;
 }
 
-void World::addEntity(Entity *e){ //Move to System Manager
+void World::addEntity(Entity *e){ //DEPRICATED!
     auto systemRange = sm->systemsByComponentHash.find(*e->componentBits);
     //Check for cache component vector
     if ( systemRange != sm->systemsByComponentHash.end()){
@@ -56,7 +56,7 @@ void World::addEntity(Entity *e){ //Move to System Manager
 void World::changeEntity(Entity *e){ //Move to System Manager
     SystemsBitset enabledSystems;
     enabledSystems.reset();
-    //Take a systems
+//    Take a systems
     auto systemRange = sm->systemsByComponentHash.find(*e->componentBits);
     //If result is not empty
     if ( systemRange != sm->systemsByComponentHash.end()){
@@ -65,10 +65,13 @@ void World::changeEntity(Entity *e){ //Move to System Manager
             //If current system is not compatible with entity
             if (!(*s)->CompatibleWithConponents(e->changedComponentBits)){
                 //Remove entity from system
-                (*s)->DeleteEntity(e);
-            } else {
+//                (*s)->DeleteEntity(e);
+                e->systemBits->reset((*s)->id); //Unmark system
+            }
+            else {
                 //Dont delete entity from system and set bit
-                enabledSystems.set((*s)->id);
+//                enabledSystems.set((*s)->id);
+//                e->systemBits->set((*s)->id); //Mark system
             };
         }
     }
@@ -76,23 +79,26 @@ void World::changeEntity(Entity *e){ //Move to System Manager
     systemRange = sm->systemsByComponentHash.find(*e->changedComponentBits);
     //if exists
     if ( systemRange != sm->systemsByComponentHash.end()){
-        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
+//        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
+        for (auto s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
             //Check bits
-            if ( system->second->CompatibleWithConponents( e->changedComponentBits ) ){
+            if ( (*s)->CompatibleWithConponents( e->changedComponentBits ) ){
                 //If not present in system
-                if ( !enabledSystems.test(system->second->id) ) {
+//                if ( !enabledSystems.test(system->second->id) ) {
+                if ( !e->systemBits->test((*s)->id) ) {
                     //Add entyty to system
-                    system->second->AddEntity(e);
+                    (*s)->AddEntity(e);
                 }
             }
         }
     } else {
-        //Try to add Entity as new one
+        //Try to add Entity as new one and build new set
         for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
             //Check bits
             if ( system->second->CompatibleWithConponents( e->changedComponentBits ) ){
                 //If not present in system
-                if ( !enabledSystems.test(system->second->id) ) {
+                if ( !e->systemBits->test(system->second->id) ) {
+//                if ( !enabledSystems.test(system->second->id) ) {
                     //Add entyty to system
                     system->second->AddEntity(e);
                 }

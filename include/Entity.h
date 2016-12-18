@@ -80,11 +80,11 @@ public:
     bool changed;
     pthread_mutex_t mutex;
     pthread_mutexattr_t mutexAttr;
+    SystemsBitset *systemBits;
 
 private:
     int id;
     static int INDEX;
-    SystemsBitset *systemBits;
     World *world;
 };
 

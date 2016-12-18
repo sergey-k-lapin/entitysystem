@@ -20,11 +20,19 @@ void AsyncSystem::InternalThreadEntry(){
     while(true){
         pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
         std::unordered_set<Entity*>* currentOutEntitySet = outEntitySet;
-        for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end(); ++it){
+        for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end();){
             
-            this->processEntity(*it);
+            if (this->CompatibleWithConponents((*it)->componentBits)){
+                this->processEntity(*it);
+                ++it;
+            } else {
+                std::cout << "Remove entity " << (*it) << " from " << this << std::endl;
+//                (*it)->systemBits->reset(this->id);
+                CheckComponent((*it));
+                it = currentOutEntitySet->erase(it);
+            }
         }
-        this->ApplyChanges();
+//        this->ApplyChanges();
         if ( inEntitySet->empty() && added.empty() && removed.empty() ){
             pthread_mutex_lock(&my_mutex);
             pthread_cond_wait(&cond, &my_mutex);

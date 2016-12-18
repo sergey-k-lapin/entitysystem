@@ -31,30 +31,30 @@ void System::AddEntity(Entity* e){
 }
 
 void System::DeleteEntity(Entity* e){
-    removed.push_back(e);
+//    removed.push_back(e);
 }
 
 void System::ApplyRemove() {
-    while (!removed.empty()){
-        Entity* e = removed.front();
-        inEntitySet->erase(e); //Remove entity from system
-        e->getSystemBits()->reset(this->id); //Reset system bit
-        e->lock();
-        for (auto it=e->removedComponents.begin(); it != e->removedComponents.end();) {
-            
-            if ((*it)->usedInSystems.test(this->id)) {
-                (*it)->usedInSystems.reset(this->id);
-                if ((*it)->usedInSystems.none()){
-                    e->removeFromCurrent((*it));
-                }
-                it = e->removedComponents.erase(it);                
-            } else {
-                ++it;
-            }
-        }
-        e->unlock();
-        removed.pop_front();
-    }
+//    while (!removed.empty()){
+//        Entity* e = removed.front();
+//        inEntitySet->erase(e); //Remove entity from system
+//        e->getSystemBits()->reset(this->id); //Reset system bit
+//        e->lock();
+//        for (auto it=e->removedComponents.begin(); it != e->removedComponents.end();) {
+//            
+//            if ((*it)->usedInSystems.test(this->id)) {
+//                (*it)->usedInSystems.reset(this->id);
+//                if ((*it)->usedInSystems.none()){
+//                    e->removeFromCurrent((*it));
+//                }
+//                it = e->removedComponents.erase(it);                
+//            } else {
+//                ++it;
+//            }
+//        }
+//        e->unlock();
+//        removed.pop_front();
+//    }
 };
 
 void System::ApplyAdd() {
@@ -68,8 +68,26 @@ void System::ApplyAdd() {
 };
 
 void System::ApplyChanges() {
-    ApplyRemove();
+//    ApplyRemove();
 //    ApplyAdd();
+}
+
+void System::CheckComponent(Entity* e) {
+    e->getSystemBits()->reset(this->id); //Reset system bit
+            e->lock();
+            for (auto it=e->removedComponents.begin(); it != e->removedComponents.end();) {
+    
+                if ((*it)->usedInSystems.test(this->id)) {
+                    (*it)->usedInSystems.reset(this->id);
+                    if ((*it)->usedInSystems.none()){
+                        e->removeFromCurrent((*it));
+                    }
+                    it = e->removedComponents.erase(it);
+                } else {
+                    ++it;
+                }
+            }
+            e->unlock();
 }
 
 void System::AcceptComponentType(ComponentType *type){

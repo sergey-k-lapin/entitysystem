@@ -43,6 +43,8 @@ public:
     void ApplyRemove();
     void ApplyAdd();
     
+    void CheckComponent(Entity* e);
+    
     unsigned int id;
     int Lock(pthread_mutex_t* mutex);
     int Unlock(pthread_mutex_t* mutex);

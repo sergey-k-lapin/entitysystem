@@ -66,7 +66,7 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
         addedComponentBits.set(type->getIndex()); //Set as added
 //        unlock(); //Unlock entity
         components.insert(std::pair<ComponentType*, Component*>(type, component)); //Add component
-        //Move this block to Component constructor!
+        //Move this block to Component constructor?
         auto it = this->world->sm->SystemsForComponent.find(type); //Find System bits for component type
         if (it == this->world->sm->SystemsForComponent.end()){ //If not found
             std::cout << "Warning: Systems for component type "<< type->index << " not found." << std::endl;
@@ -168,9 +168,10 @@ Component* Entity::getComponent(ComponentType *type){
 void Entity::update(){ //TODO: Должно реализоваться в ComponentManager
     this->lock();
     (*changedComponentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
+//    (*componentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
+    this->reset();
      world->changeEntity( this );
-     this->reset();
-     this->unlock();    
+     this->unlock();
 //    for (auto it = removedComponents.begin(); it != removedComponents.end(); ++it){
 ////        delete *it; //TODO: object manager...
 //        components.erase(components.find(*it));
