@@ -25,7 +25,9 @@ System::~System() {
 }
 
 void System::AddEntity(Entity* e){
-    added.push_back(e);
+    e->getSystemBits()->set(this->id);
+    inEntitySet->insert(e);
+
 }
 
 void System::DeleteEntity(Entity* e){
@@ -56,18 +58,18 @@ void System::ApplyRemove() {
 };
 
 void System::ApplyAdd() {
-    while (!added.empty()){ //Process and add all new
-        Entity* e = added.front();
-        e->getSystemBits()->set(this->id);
-        this->processEntity(e);
-        inEntitySet->insert(e);
-        added.pop_front();
-    }
+//    while (!added.empty()){ //Process and add all new
+//        Entity* e = added.front();
+//        e->getSystemBits()->set(this->id);
+//        this->processEntity(e);
+//        inEntitySet->insert(e);
+//        added.pop_front();
+//    }
 };
 
 void System::ApplyChanges() {
     ApplyRemove();
-    ApplyAdd();
+//    ApplyAdd();
 }
 
 void System::AcceptComponentType(ComponentType *type){

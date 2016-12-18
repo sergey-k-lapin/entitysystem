@@ -21,6 +21,7 @@ void AsyncSystem::InternalThreadEntry(){
         pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
         std::unordered_set<Entity*>* currentOutEntitySet = outEntitySet;
         for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end(); ++it){
+            
             this->processEntity(*it);
         }
         this->ApplyChanges();

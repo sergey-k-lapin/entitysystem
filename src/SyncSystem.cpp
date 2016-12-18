@@ -18,5 +18,5 @@ void SyncSystem::process(){
     for (auto it = outEntitySet->begin(); it != outEntitySet->end(); ++it){
         this->processEntity(*it);
     }
-    ApplyAdd();
+//    ApplyAdd();
 }
