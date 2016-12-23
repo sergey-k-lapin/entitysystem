@@ -17,5 +17,6 @@
 #include <EntityManager.h>
 #include <World.h>
 #include <AsyncComponent.h>
+//#include <Behavior.h>
 
 #endif

@@ -66,7 +66,11 @@ void Entity::reset(){
     (*componentBits) = (*changedComponentBits);
     addedComponentBits.reset();
     removedComponentBits.reset();    
-    this->changed = false;
+//    this->changed = false;
+}
+
+bool Entity::changed(){
+    return !(this->addedComponentBits.none() | this->removedComponentBits.none());
 }
 
 Entity* Entity::addComponent(Component *component){
@@ -193,6 +197,8 @@ void Entity::update(){ //TODO: Должно реализоваться в Compon
 //    }
 //    removedComponents.clear();
 }
+
+
 
 int Entity::lock(){
     return pthread_mutex_lock( &mutex );

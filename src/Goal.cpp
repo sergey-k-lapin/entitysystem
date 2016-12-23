@@ -7,6 +7,13 @@
 //
 
 #include "goal.h"
+Goal::Goal(){
+    priority = 0;
+};
+
+Goal::Goal(int priority){
+    this->priority = priority;
+};
 
 bool Goal::check(Entity* e) {
     return true;

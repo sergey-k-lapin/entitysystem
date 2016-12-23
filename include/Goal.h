@@ -13,7 +13,10 @@
 #include <stdio.h>
 class Goal {
 public:
+    Goal();
+    Goal(int priority);
     virtual bool check(Entity* e);
+    int priority;
 };
 
 //class Pass: public Goal {

@@ -12,8 +12,9 @@ int Behavior::next(BEntity* e){
     if (e->currentCommand != NULL){
         Command* result = e->currentCommand->check(e);
         if (result) {
-            result->exec(e);
+            e->currentCommand->exit(e);
             e->currentCommand = result;
+            e->currentCommand->enter(e);
             return 0;
         }
     }

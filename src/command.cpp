@@ -12,7 +12,11 @@ Command::Command(char* name){
     this->name = name;
 };
 
-void Command::exec(Entity* e){
+void Command::enter(Entity* e){
+    
+};
+
+void Command::exit(Entity* e){
     
 };
 

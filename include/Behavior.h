@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <entitysystem.h>
 #include <command.h>
-#include <goal.h>
+#include <Goal.h>
 #include <bentity.h>
 
 class Behavior {

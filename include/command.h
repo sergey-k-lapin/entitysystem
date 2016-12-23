@@ -10,15 +10,21 @@
 #define command_hpp
 
 #include <stdio.h>
-#include <unordered_map>
-#include "goal.h"
+#include <map>
+#include <Goal.h>
 #include <entitysystem.h>
 
+struct command_map_comparator {
+    bool operator()(Goal* a, Goal* b) const {
+        return a->priority < b->priority;
+    }
+};
 
 class Command {
 public:
     Command(char* name);
-    virtual void exec(Entity* e);
+    virtual void enter(Entity* e);
+    virtual void exit(Entity* e);
     virtual void cancel(Entity* e);
     void linkTo(Command* state);
     void linkTo(Command* state, Goal* goal);
@@ -29,11 +35,12 @@ public:
     void AcceptComponentType( ComponentType *type );
 
     Command* check(Entity* e);
-    std::unordered_map<Goal*,Command*> links;
+//    std::unordered_map<Goal*,Command*> links;
+    std::map<Goal*, Command*, command_map_comparator> links;
     char* name;
 
 protected:
-    std::bitset<128> requiredComponents;
+    ComponentsBitset requiredComponents;
 };
 
 #endif /* command_hpp */

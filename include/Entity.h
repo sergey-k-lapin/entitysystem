@@ -29,8 +29,8 @@ public:
     int getId();
     ComponentsBitset *getComponentBits();
     SystemsBitset *getSystemBits();
-    bool isActive();
-    bool isEnabled();
+//    bool isActive();
+//    bool isEnabled();
     template <typename c>
     Component *getComponent(){
         return this->getComponent(ComponentType::getTypeFor<c>());
@@ -76,7 +76,9 @@ public:
     int lock();
     int unlock();
     void addToChange();
-
+    
+    bool changed();
+    
     ComponentsBitset *componentBits;
     ComponentsBitset *changedComponentBits;
 
@@ -85,13 +87,13 @@ public:
     std::unordered_map<ComponentType*, Component*> components;
     ComponentsBitset addedComponentBits;
     
-    std::unordered_set<Component*> removedComponents; //Must be depricated
-    ComponentsBitset removedComponentBits; //Must be depricated
+    std::unordered_set<Component*> removedComponents; //Must be depricated?
+    ComponentsBitset removedComponentBits; //Must be depricated?
     
     std::vector<Component*> addComponents;
     std::unordered_map<ComponentType*, Component*> removeComponents;
     
-    bool changed;
+//    bool changed;
     pthread_mutex_t mutex;
     pthread_mutexattr_t mutexAttr;
     SystemsBitset *systemBits;
