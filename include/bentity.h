@@ -13,7 +13,7 @@
 #include <entitysystem.h>
 
 class Behavior;
-class Command;
+class State;
 
 class BEntity: public Entity {
 public:
@@ -22,7 +22,7 @@ public:
     int cancelCommand();
     void assignBehavior(Behavior* b);
 //protected:
-    Command* currentCommand = NULL;
+    State* currentCommand = NULL;
     Behavior* behavior = NULL;
 };
 

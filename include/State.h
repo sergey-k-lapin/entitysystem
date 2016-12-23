@@ -6,8 +6,8 @@
 //  Copyright © 2016 lapingames.com. All rights reserved.
 //
 
-#ifndef command_hpp
-#define command_hpp
+#ifndef state_h
+#define state_h
 
 #include <stdio.h>
 #include <map>
@@ -20,27 +20,27 @@ struct command_map_comparator {
     }
 };
 
-class Command {
+class State {
 public:
-    Command(char* name);
+    State(char* name);
     virtual void enter(Entity* e);
     virtual void exit(Entity* e);
     virtual void cancel(Entity* e);
-    void linkTo(Command* state);
-    void linkTo(Command* state, Goal* goal);
+    void linkTo(State* state);
+    void linkTo(State* state, Goal* goal);
     template <typename CType>
     void AcceptComponentType(){
         AcceptComponentType(ComponentType::getTypeFor<CType>());
     };
     void AcceptComponentType( ComponentType *type );
 
-    Command* check(Entity* e);
+    State* check(Entity* e);
 //    std::unordered_map<Goal*,Command*> links;
-    std::map<Goal*, Command*, command_map_comparator> links;
+    std::map<Goal*, State*, command_map_comparator> links;
     char* name;
 
 protected:
     ComponentsBitset requiredComponents;
 };
 
-#endif /* command_hpp */
+#endif /* state_h */

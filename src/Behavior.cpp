@@ -10,7 +10,7 @@
 
 int Behavior::next(BEntity* e){
     if (e->currentCommand != NULL){
-        Command* result = e->currentCommand->check(e);
+        State* result = e->currentCommand->check(e);
         if (result) {
             e->currentCommand->exit(e);
             e->currentCommand = result;
@@ -30,7 +30,7 @@ int Behavior::getCompatibleCommand(Entity* e){
     return 0;
 }
 
-void Behavior::addCommand(Command* command){
+void Behavior::addCommand(State* command){
     commands[command->name] = command;
 };
 
@@ -39,8 +39,8 @@ int Behavior::linkCommandsByName(char* from, char* to){
 }
 
 int Behavior::linkCommandsByName(char* from, char* to, Goal* goal){
-    Command* stateFrom = commands[from];
-    Command* stateTo = commands[to];
+    State* stateFrom = commands[from];
+    State* stateTo = commands[to];
     if (stateFrom && stateTo){
         stateFrom->linkTo(stateTo, goal);
         return 0;
@@ -56,7 +56,7 @@ int Behavior::setDefault(char* name){
     return -1;
 }
 
-Command* Behavior::getDefaultCommand(){
+State* Behavior::getDefaultCommand(){
     if (this->defaultCommand == NULL){
         auto d = commands.begin();
         if (d!= commands.end()){

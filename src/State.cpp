@@ -6,33 +6,33 @@
 //  Copyright © 2016 lapingames.com. All rights reserved.
 //
 
-#include "command.h"
+#include "State.h"
 
-Command::Command(char* name){
+State::State(char* name){
     this->name = name;
 };
 
-void Command::enter(Entity* e){
+void State::enter(Entity* e){
     
 };
 
-void Command::exit(Entity* e){
+void State::exit(Entity* e){
     
 };
 
-void Command::cancel(Entity* e){
+void State::cancel(Entity* e){
     
 }
 
-void Command::linkTo(Command* state){
+void State::linkTo(State* state){
     this->linkTo(state, new Goal());
 };
 
-void Command::linkTo(Command* state, Goal* goal){
+void State::linkTo(State* state, Goal* goal){
     this->links[goal] = state;
 };
 
-Command* Command::check(Entity* e){
+State* State::check(Entity* e){
     for (auto link = links.begin(); link != links.end(); ++link){
         if (link->first->check(e)){
             return (link->second);
@@ -41,7 +41,7 @@ Command* Command::check(Entity* e){
     return NULL;
 };
 
-void Command::AcceptComponentType(ComponentType *type){
+void State::AcceptComponentType(ComponentType *type){
     this->requiredComponents.set(type->getIndex());
 }
 

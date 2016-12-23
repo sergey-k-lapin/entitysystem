@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <entitysystem.h>
-#include <command.h>
+#include <State.h>
 #include <Goal.h>
 #include <bentity.h>
 
@@ -21,15 +21,15 @@ public:
     int cancelCommand(BEntity* e);
     
     int getCompatibleCommand(Entity* e);
-    void addCommand(Command* command);
+    void addCommand(State* command);
     int linkCommandsByName(char* from, char* to);
     int linkCommandsByName(char* from, char* to, Goal* goal);
     int setDefault(char* name);
-    Command* getDefaultCommand();
+    State* getDefaultCommand();
     
 protected:
-    Command* defaultCommand = NULL;
-    std::unordered_map<char*,Command*> commands;
+    State* defaultCommand = NULL;
+    std::unordered_map<char*,State*> commands;
 };
 
 

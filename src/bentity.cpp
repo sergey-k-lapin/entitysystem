@@ -8,7 +8,7 @@
 
 #include "bentity.h"
 #include "Behavior.h"
-#include "command.h"
+#include "State.h"
 
 BEntity::BEntity(World* w):Entity(w){
     
