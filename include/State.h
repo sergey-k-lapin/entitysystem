@@ -33,7 +33,7 @@ public:
         AcceptComponentType(ComponentType::getTypeFor<CType>());
     };
     void AcceptComponentType( ComponentType *type );
-
+    bool Compatible(Entity* e);
     State* check(Entity* e);
 //    std::unordered_map<Goal*,Command*> links;
     std::map<Goal*, State*, command_map_comparator> links;

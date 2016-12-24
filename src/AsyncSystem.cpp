@@ -22,18 +22,18 @@ void AsyncSystem::InternalThreadEntry(){
         pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
         std::unordered_set<Entity*>* currentOutEntitySet = outEntitySet;
         for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end();){
+            Entity* e = *it;
+            disabled =  ~*e->disabledComponetBits & *e->componentBits;
 
-            disabled =  ~*(*it)->disabledComponetBits & *(*it)->componentBits;
-
-            if (this->CompatibleWithConponents((*it)->componentBits)){
+            if (this->CompatibleWithConponents(e->componentBits)){
                 if ( disabled.none() ) {
-                    this->processEntity(*it);
+                    this->processEntity(e);
                 }
                 ++it;
             } else {
-                std::cout << "Remove entity " << (*it) << " from " << this << std::endl;
-//                (*it)->systemBits->reset(this->id);
-                CheckComponent((*it));
+                std::cout << "Remove entity " << e << " from " << this << std::endl;
+                e->systemBits->reset(this->id);
+                CheckComponent(e);
                 it = currentOutEntitySet->erase(it);
             }
         }

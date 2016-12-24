@@ -26,21 +26,21 @@ int Behavior::cancelCommand(BEntity* e) {
     return 0;
 }
 
-int Behavior::getCompatibleCommand(Entity* e){
+int Behavior::getCompatibleState(Entity* e){
     return 0;
 }
 
-void Behavior::addCommand(State* command){
-    commands[command->name] = command;
+void Behavior::addState(State* state){
+    states[state->name] = state;
 };
 
-int Behavior::linkCommandsByName(char* from, char* to){
-    return this->linkCommandsByName(from, to, new Goal());
+int Behavior::linkStatesByName(char* from, char* to){
+    return this->linkStatesByName(from, to, new Goal());
 }
 
-int Behavior::linkCommandsByName(char* from, char* to, Goal* goal){
-    State* stateFrom = commands[from];
-    State* stateTo = commands[to];
+int Behavior::linkStatesByName(char* from, char* to, Goal* goal){
+    State* stateFrom = states[from];
+    State* stateTo = states[to];
     if (stateFrom && stateTo){
         stateFrom->linkTo(stateTo, goal);
         return 0;
@@ -49,21 +49,35 @@ int Behavior::linkCommandsByName(char* from, char* to, Goal* goal){
 }
 
 int Behavior::setDefault(char* name){
-    if (this->commands[name]){
-        this->defaultCommand = commands[name];
+    if (this->states[name]){
+        this->defaultState = states[name];
         return 0;
     }
     return -1;
 }
 
-State* Behavior::getDefaultCommand(){
-    if (this->defaultCommand == NULL){
-        auto d = commands.begin();
-        if (d!= commands.end()){
-            this->defaultCommand = d->second;
+int Behavior::enterState(BEntity* e, char* name){
+    if (e->currentCommand) {
+        e->currentCommand->exit(e);
+        State* s = this->states[name];
+        if (s) {
+            s->enter(e);
+            return 0;
+        }
+        return -1;
+    }
+    return -1;
+}
+
+
+State* Behavior::getDefaultState(){
+    if (this->defaultState == NULL){
+        auto d = states.begin();
+        if (d!= states.end()){
+            this->defaultState = d->second;
         }
     }
-    return this->defaultCommand;
+    return this->defaultState;
 }
 
 

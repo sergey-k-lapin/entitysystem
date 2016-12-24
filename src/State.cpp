@@ -41,6 +41,12 @@ State* State::check(Entity* e){
     return NULL;
 };
 
+bool State::Compatible(Entity* e){
+    return ( (requiredComponents & *e->componentBits) ==  requiredComponents);
+    
+};
+
+
 void State::AcceptComponentType(ComponentType *type){
     this->requiredComponents.set(type->getIndex());
 }

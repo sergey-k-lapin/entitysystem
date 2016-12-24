@@ -70,12 +70,11 @@ void Entity::reset(){
 }
 
 bool Entity::changed(){
-    return !(this->addedComponentBits.none() | this->removedComponentBits.none());
+    return (this->addedComponentBits.none() | this->removedComponentBits.none());
 }
 
 Entity* Entity::addComponent(Component *component){
-    addComponent(component, ComponentType::getTypeFor(component));
-    return this;
+    return addComponent(component, ComponentType::getTypeFor(component));
 }
 
 Entity* Entity::addComponent(Component *component, ComponentType *type){
@@ -84,7 +83,9 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
     if ( !addedComponentBits.test(type->getIndex()) && !componentBits->test(type->getIndex()) ) {
         addedComponentBits.set(type->getIndex()); //Set as added
 //        unlock(); //Unlock entity
-        components.insert(std::pair<ComponentType*, Component*>(type, component)); //Add component
+//        auto res = components.insert(std::pair<ComponentType*, Component*>(type, component)); //Add component
+        auto res = components[type] = component; //Add component
+//        std::cout << "Insert component " << res.second << std::endl;
         //Move this block to Component constructor?
         auto it = this->world->sm->SystemsForComponent.find(type); //Find System bits for component type
         if (it == this->world->sm->SystemsForComponent.end()){ //If not found
@@ -201,7 +202,9 @@ void Entity::update(){ //TODO: Должно реализоваться в Compon
 
 
 int Entity::lock(){
-    return pthread_mutex_lock( &mutex );
+    int ret = pthread_mutex_lock( &mutex );
+    assert(ret != EDEADLK);
+    return ret;
 }
 
 int Entity::unlock(){

@@ -14,6 +14,7 @@
 #include <unordered_set>
 #include <ComponentType.h>
 #include <World.h>
+#include <assert.h>
 
 class Component;
 class ComponentType;

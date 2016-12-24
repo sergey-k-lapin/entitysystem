@@ -21,7 +21,7 @@ int BEntity::nextCommand(){
 }
 void BEntity::assignBehavior(Behavior* b){
     this->behavior = b;
-    this->currentCommand = b->getDefaultCommand();
+    this->currentCommand = b->getDefaultState();
 }
 
 int BEntity::cancelCommand(){

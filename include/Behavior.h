@@ -18,18 +18,18 @@
 class Behavior {
 public:
     int next(BEntity* e);
-    int cancelCommand(BEntity* e);
-    
-    int getCompatibleCommand(Entity* e);
-    void addCommand(State* command);
-    int linkCommandsByName(char* from, char* to);
-    int linkCommandsByName(char* from, char* to, Goal* goal);
+    int cancelCommand(BEntity* e); //Нужно ли?
+
+    int getCompatibleState(Entity* e);
+    void addState(State* state);
+    int linkStatesByName(char* from, char* to);
+    int linkStatesByName(char* from, char* to, Goal* goal);
     int setDefault(char* name);
-    State* getDefaultCommand();
-    
+    State* getDefaultState();
+    int enterState(BEntity* e, char* name);
 protected:
-    State* defaultCommand = NULL;
-    std::unordered_map<char*,State*> commands;
+    State* defaultState = NULL;
+    std::unordered_map<char*,State*> states;
 };
 
 

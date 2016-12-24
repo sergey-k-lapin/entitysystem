@@ -31,55 +31,55 @@ EntityManager* World::getEntityManager(){
 }
 
 void World::addEntity(Entity *e){ //DEPRICATED!
-    auto systemRange = sm->systemsByComponentHash.find(*e->componentBits);
-    //Check for cache component vector
-    if ( systemRange != sm->systemsByComponentHash.end()){
-        //Component vector succesefuly found, add Entuty to systems
-        for (std::vector<System*>::iterator s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
-            //Add entity to systems
-            (*s)->AddEntity(e);
-        }
-    } else {
-        //Create new component vector if it possible and add entity to compatible systems
-        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
-            //Check bits
-            if ( system->second->CompatibleWithConponents( e->componentBits ) ){
-                //Add entyty to system
-                system->second->AddEntity(e);
-                //Add system to accept list
-                sm->addSystemWithComponentBits(system->second, e->componentBits);
-            }
-        }
-    }
-    //Add entity to list
+//    auto systemRange = sm->systemsByComponentHash.find(*e->componentBits);
+//    //Check for cache component vector
+//    if ( systemRange != sm->systemsByComponentHash.end()){
+//        //Component vector succesefuly found, add Entuty to systems
+//        for (std::vector<System*>::iterator s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
+//            //Add entity to systems
+//            (*s)->AddEntity(e);
+//        }
+//    } else {
+//        //Create new component vector if it possible and add entity to compatible systems
+//        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
+//            //Check bits
+//            if ( system->second->CompatibleWithConponents( e->componentBits ) ){
+//                //Add entyty to system
+//                system->second->AddEntity(e);
+//                //Add system to accept list
+//                sm->addSystemWithComponentBits(system->second, e->componentBits);
+//            }
+//        }
+//    }
+//    //Add entity to list
 }
 void World::changeEntity(Entity *e){ //Move to System Manager
-    SystemsBitset enabledSystems;
-    enabledSystems.reset();
+//    SystemsBitset enabledSystems;
+//    enabledSystems.reset();
 //    ComponentsBitset  resultComponentBits = *e->componentBits & *e->disabledComponetBits;
     ComponentsBitset  resultComponentBits = *e->componentBits & *e->disabledComponetBits;
 
-//    Take a systems
-    auto systemRange = sm->systemsByComponentHash.find(resultComponentBits);
-    //If result is not empty
-    if ( systemRange != sm->systemsByComponentHash.end()){
-        //Check for compatibility
-        for (auto s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
-            //If current system is not compatible with entity
-            if (!(*s)->CompatibleWithConponents(&resultComponentBits)){
-                //Remove entity from system
-//                (*s)->DeleteEntity(e);
-                e->systemBits->reset((*s)->id); //Unmark system
-            }
-            else {
-                //Dont delete entity from system and set bit
-//                enabledSystems.set((*s)->id);
+////    Take a systems
+//    auto systemRange = sm->systemsByComponentHash.find(resultComponentBits);
+//    //If result is not empty
+//    if ( systemRange != sm->systemsByComponentHash.end()){
+//        //Check for compatibility
+//        for (auto s = systemRange->second->begin(); s != systemRange->second->end(); ++s){
+//            //If current system is not compatible with entity
+//            if (!(*s)->CompatibleWithConponents(&resultComponentBits)){
+//                //Remove entity from system
+////                (*s)->DeleteEntity(e);
+////                e->systemBits->reset((*s)->id); //Unmark system
+//            }
+//            else {
+//                //Dont delete entity from system and set bit
+////                enabledSystems.set((*s)->id);
 //                e->systemBits->set((*s)->id); //Mark system
-            };
-        }
-    }
+//            };
+//        }
+//    }
     //Try to fing existing set
-    systemRange = sm->systemsByComponentHash.find(resultComponentBits);
+    auto systemRange = sm->systemsByComponentHash.find(resultComponentBits);
     //if exists
     if ( systemRange != sm->systemsByComponentHash.end()){
 //        for(auto system = sm->getSystems()->begin(); system != sm->getSystems()->end(); ++system){
