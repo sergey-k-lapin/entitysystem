@@ -8,6 +8,10 @@
 
 #include "Behavior.h"
 
+Behavior::~Behavior(){
+    
+}
+
 int Behavior::next(BEntity* e){
     if (e->currentCommand != NULL){
         State* result = e->currentCommand->check(e);

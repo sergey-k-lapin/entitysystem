@@ -119,7 +119,7 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
 }
 
 Entity* Entity::addToCurrent(Component *component, ComponentType *type){ //Remove
-    components.insert(std::pair<ComponentType*, Component*>(type, component));
+//    components.insert(std::pair<ComponentType*, Component*>(type, component));
     return this;
 }
 
@@ -155,7 +155,7 @@ Entity* Entity::removeComponent(Component* component,ComponentType* type){
 //    lock();
     if ( componentBits->test(type->getIndex())) {
         removedComponentBits.set( type->getIndex());
-//        removedComponents.insert( type );
+        
         removedComponents.insert( component );
 //        unlock();
         return this;

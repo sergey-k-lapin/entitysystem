@@ -17,6 +17,7 @@
 
 class Behavior {
 public:
+    virtual ~Behavior(); //!important for std::typeinfo()
     int next(BEntity* e);
     int cancelCommand(BEntity* e); //Нужно ли?
 
