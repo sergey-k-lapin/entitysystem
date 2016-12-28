@@ -103,8 +103,8 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
 //        removedComponents.erase(removedComponents.find(component));
 //        unlock(); //Unlock entity
         return this;
-    } else {
-        return NULL;
+    }   else {
+        return NULL; //Component exists and present
     }
     
 //    addComponents.push_back(component);

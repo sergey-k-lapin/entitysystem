@@ -12,29 +12,19 @@ State::State(char* name){
     this->name = name;
 };
 
-void State::enter(Entity* e){
-    
-};
-
-void State::exit(Entity* e){
-    
-};
-
-void State::cancel(Entity* e){
-    
-}
-
 void State::linkTo(State* state){
-    this->linkTo(state, new Goal());
+    this->linkTo(state, new Transition());
 };
 
-void State::linkTo(State* state, Goal* goal){
-    this->links[goal] = state;
+void State::linkTo(State* state, Transition* transition){
+    links[transition] = state;
+    child[state] = transition;
 };
 
-State* State::check(Entity* e){
+State* State::change(Entity* e){
     for (auto link = links.begin(); link != links.end(); ++link){
-        if (link->first->check(e)){
+        Transition* transition = link->first;
+        if (transition->make(e)){
             return (link->second);
         }
     }

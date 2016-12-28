@@ -17,6 +17,7 @@ class SystemManager;
 class Entity;
 class Manager;
 class EntityManager;
+class BehaviorManager;
 
 class World {
 public:
@@ -32,7 +33,8 @@ public:
     void disable(Entity *e);
 //private:
     SystemManager *sm;
-    EntityManager *em;    
+    EntityManager *em;
+    BehaviorManager* bm;
     Context* activeContext;
     Context* visibleContext;
     std::vector<Context*> contextList;

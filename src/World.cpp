@@ -8,6 +8,7 @@
 #include <World.h>
 #include <SystemManager.h>
 #include <EntityManager.h>
+#include <BehaviorManager.h>
 
 World::World() {
     sm = new SystemManager( this );

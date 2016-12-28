@@ -13,21 +13,54 @@ BehaviorManager::BehaviorManager(){
 }
 
 BehaviorManager::~BehaviorManager(){
-    
+    for (auto it=Behaviors.begin(); it!= Behaviors.end(); ++it){
+        delete (it->second );
+    }
 }
 
 void BehaviorManager::RegisterBehavior(Behavior* behavior){
-    unsigned int BehaviorId = BehaviorType::GetIndex(behavior);
-    std::cout << typeid(*behavior).name() << std::endl;
-    Behaviors[BehaviorId] = behavior;
+    Behaviors[&typeid(*behavior)] = behavior;
 };
 
-void BehaviorManager::Assign(Entity* e, unsigned int behaviorId){
-    Behavior* behavior = Behaviors[behaviorId];
+void BehaviorManager::Assign(Entity* e, const std::type_info *id){
+    Behavior* behavior = Behaviors[id];
     if (behavior != 0) {
-        Entityes[e] = behavior;
+        EntytyProperties* properties = new struct EntytyProperties();
+        properties->behavior = behavior;
+        properties->currentState = behavior->getDefaultState();
+        Entityes[e] = properties;
     }
 };
+
+void BehaviorManager::MakeTransition(Entity* e){
+    e->lock();
+    EntytyProperties* properties = Entityes[e];
+    State* result = properties->currentState->change(e);
+    if (result) {
+        properties->currentState = result;
+    }
+    e->unlock();
+};
+
+void BehaviorManager::MakeTransition(Entity* e, char* name){
+    e->lock();
+    EntytyProperties* properties = Entityes[e];
+    State* newState = properties->behavior->getState(name); //Current state
+    if (newState) {
+        Transition* transition = properties->currentState->child[newState];
+        if (transition != 0){ //Link to state exists
+            transition->make(e); //Make transition to new state
+            properties->currentState = newState; //Set new state as current
+        }
+    }
+    e->unlock();
+
+//    State* result = properties->currentState->change(e);
+//    if (result) {
+//        properties->currentState = result;
+//    }
+};
+
 
 void BehaviorManager::DeassignBehavior(Entity* e){
     auto it = Entityes.find(e);
@@ -37,7 +70,7 @@ void BehaviorManager::DeassignBehavior(Entity* e){
 };
 
 void BehaviorManager::addToProcess(Entity* e){
-    processQueue.push_back( e );
+    transitionQueue.push_back( e );
     //  pthread_mutex_lock(&my_mutex);
     pthread_cond_signal(&cond);
     //  pthread_mutex_unlock(&my_mutex);
@@ -47,15 +80,11 @@ void BehaviorManager::addToProcess(Entity* e){
 
 void BehaviorManager::InternalThreadEntry(){
     while (true){
-        //For each changed entity
-        while ( !processQueue.empty() ){
-            Entity* e = processQueue.front();
-            e->lock();
-            Behavior* behavior = Entityes[e];
-            std::cout << "Try to change behavior " << behavior << " fot entity " << e << std::endl;
-            e->unlock();
-            
-            processQueue.pop_front();
+        //For each queued entity
+        while ( !transitionQueue.empty() ){
+            Entity* e = transitionQueue.front();
+            MakeTransition(e);
+            transitionQueue.pop_front();
         }
 
     pthread_mutex_lock(&my_mutex);

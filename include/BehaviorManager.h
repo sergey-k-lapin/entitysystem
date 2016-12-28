@@ -15,7 +15,12 @@
 #include <Thread.h>
 #include <Entity.h>
 #include <Behavior.h>
-#include <BehaviorType.h>
+//#include <BehaviorType.h>
+
+struct EntytyProperties {
+    Behavior* behavior;
+    State* currentState;
+};
 
 class BehaviorManager: public Thread {
 public:
@@ -27,20 +32,22 @@ public:
     
     template <typename behavior_type>
     void AssignBehavior(Entity* e){
-        Assign(e,BehaviorType::GetIndex<behavior_type>());
+        Assign(e, &typeid(behavior_type));
     };
     
     void DeassignBehavior(Entity* e);
     
     void addToProcess(Entity* e);
+    void MakeTransition(Entity* e);
+    void MakeTransition(Entity* e, char* name);
 
 private:
     void InternalThreadEntry();
-    void Assign(Entity* e, unsigned int behaviorId);
+    void Assign(Entity* e, const std::type_info *id);
     
-    std::unordered_map<unsigned int, Behavior*> Behaviors;
-    std::unordered_map<Entity*, Behavior*> Entityes;
-    std::deque<Entity*> processQueue;
+    std::unordered_map<const std::type_info*, Behavior*> Behaviors;
+    std::unordered_map<Entity*, EntytyProperties*> Entityes;
+    std::deque<Entity*> transitionQueue;
 
     pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_cond_t cond = PTHREAD_COND_INITIALIZER;

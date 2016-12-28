@@ -10,24 +10,21 @@
 #define behavior_hpp
 
 #include <stdio.h>
-#include <entitysystem.h>
 #include <State.h>
-#include <Goal.h>
-#include <bentity.h>
+#include <Transition.h>
+//#include <Goal.h>
+//#include <bentity.h>
 
 class Behavior {
 public:
     virtual ~Behavior(); //!important for std::typeinfo()
-    int next(BEntity* e);
-    int cancelCommand(BEntity* e); //Нужно ли?
-
-    int getCompatibleState(Entity* e);
+//    int getCompatibleState(Entity* e);
     void addState(State* state);
     int linkStatesByName(char* from, char* to);
-    int linkStatesByName(char* from, char* to, Goal* goal);
+    int linkStatesByName(char* from, char* to, Transition* goal);
     int setDefault(char* name);
     State* getDefaultState();
-    int enterState(BEntity* e, char* name);
+    State* getState(char* name);
 protected:
     State* defaultState = NULL;
     std::unordered_map<char*,State*> states;
