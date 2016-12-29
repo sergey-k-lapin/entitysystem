@@ -14,4 +14,6 @@
 typedef std::bitset<8> ComponentsBitset;
 typedef std::bitset<16> SystemsBitset;
 
+#define ENTITY_CHANGE_AUTOLOCK
+
 #endif /* config_h */

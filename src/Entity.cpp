@@ -63,7 +63,7 @@ SystemsBitset *Entity::getSystemBits(){
 
 void Entity::reset(){
     //Flip bits
-    (*componentBits) = (*changedComponentBits);
+//    (*componentBits) = (*changedComponentBits);
     addedComponentBits.reset();
     removedComponentBits.reset();    
 //    this->changed = false;
@@ -78,44 +78,17 @@ Entity* Entity::addComponent(Component *component){
 }
 
 Entity* Entity::addComponent(Component *component, ComponentType *type){
-//    lock(); //Lock while changing entity
-    //To be sure that we don't have this type of component
-    if ( !addedComponentBits.test(type->getIndex()) && !componentBits->test(type->getIndex()) ) {
-        addedComponentBits.set(type->getIndex()); //Set as added
-//        unlock(); //Unlock entity
-//        auto res = components.insert(std::pair<ComponentType*, Component*>(type, component)); //Add component
-        auto res = components[type] = component; //Add component
-//        std::cout << "Insert component " << res.second << std::endl;
-        //Move this block to Component constructor?
-        auto it = this->world->sm->SystemsForComponent.find(type); //Find System bits for component type
-        if (it == this->world->sm->SystemsForComponent.end()){ //If not found
-            std::cout << "Warning: Systems for component type "<< type->index << " not found." << std::endl;
-        } else {
-//            std::cout << "component "<< type->getIndex() <<" use in systems " << *it->second << std::endl;
-            component->usedInSystems = *it->second;
-        }
-//        world->getEntityManager()->addToChange( this ); //Add Entity to change queue
-        return this;
-    } else if (removedComponentBits.test(type->getIndex())) { //If mark as removeed, replace with new.
-        components[type] = component; //Replace;
-        removedComponentBits.reset( type->getIndex());
-        std::cout << "Component replaced " << component << std::endl;
-//        removedComponents.erase(removedComponents.find(component));
-//        unlock(); //Unlock entity
-        return this;
-    }   else {
-        return NULL; //Component exists and present
+    int index = type->getIndex();
+    lock();
+    if (componentBits->test(index)) {
+        Component* old = components[type];
+        delete old;
+    } else {
+        componentBits->set(index);
     }
-    
-//    addComponents.push_back(component);
-//    world->getComponentManager()->addToChange( this );
-    
-//    addedComponentBits.set( type->getIndex() ); //Move to ComponenManager all below
-//    if (!changed){
-//        world->getEntityManager()->addToChange( this );
-//    }
-//    changed = true;
-//    return this;
+    components[type] = component;
+    unlock();
+    return this;
 }
 
 Entity* Entity::addToCurrent(Component *component, ComponentType *type){ //Remove
@@ -139,12 +112,15 @@ Entity* Entity::removeComponent(Component *component){
 }
 
 Entity * Entity::removeComponent(ComponentType* type) {
+    Entity* ret = NULL;
     auto it = components.find( type );
+    lock();
     if (it != components.end()) {
         removeComponent(it->second, it->first);
-        return this;
+        ret = this;
     }
-    return NULL;
+    unlock();
+    return ret;
 }
 
 void Entity::addToChange() {
@@ -153,43 +129,29 @@ void Entity::addToChange() {
 
 Entity* Entity::removeComponent(Component* component,ComponentType* type){
 //    lock();
-    if ( componentBits->test(type->getIndex())) {
-        removedComponentBits.set( type->getIndex());
-        
-        removedComponents.insert( component );
-//        unlock();
-        return this;
-    } else {
-        
-//        unlock();
-        return NULL;
-    }
-//    removeComponents.insert(std::pair<ComponentType*, Component*>(type, component));
-//    removedComponentBits.set( type->getIndex());
-//    this->world->getComponentManager()->addToChange( this );
-//     world->getEntityManager()->addToChange( this );
-
- //    removedComponents.insert( type );
-//    if (!changed){
-//        world->getEntityManager()->addToChange( this );
-//    }
-//    changed = true;
-//    return this;
+    int index = type->getIndex();
+    componentBits->reset(index);
+//    unlock();
+    return this;
 }
 
 Component* Entity::getComponent(ComponentType *type){
+    Component* ret;
+    lock();
+    ret = NULL;
     auto it = components.find(type);
     if (it != components.end()){
-        return it->second;
+        ret = it->second;
     }
-    return NULL;
+    unlock();
+    return ret;
 }
 
 void Entity::update(){ //TODO: Должно реализоваться в ComponentManager
     this->lock();
-    (*changedComponentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
+//    (*changedComponentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
 //    (*componentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
-    this->reset();
+//    this->reset();
      world->changeEntity( this );
      this->unlock();
 //    for (auto it = removedComponents.begin(); it != removedComponents.end(); ++it){

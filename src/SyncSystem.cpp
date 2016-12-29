@@ -16,13 +16,17 @@ SyncSystem::~SyncSystem() {
 void SyncSystem::process(){
 //    ApplyRemove();
     for (auto it = outEntitySet->begin(); it != outEntitySet->end();){
-        if (this->CompatibleWithConponents((*it)->componentBits)){
-            this->processEntity(*it);
+        Entity* e = *it;
+        e->lock();
+        if (this->CompatibleWithConponents(e->componentBits)){
+            this->processEntity(e);
             ++it;
         } else {
-            std::cout << "Remove entity " << (*it) << " from " << this << std::endl;
+//            std::cout << "Remove entity " << e << " from " << this << std::endl;
+            e->systemBits->reset(this->id);
             it = outEntitySet->erase(it);
         }
+        e->unlock();
     }
 //    ApplyAdd();
 }

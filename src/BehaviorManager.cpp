@@ -42,23 +42,20 @@ void BehaviorManager::MakeTransition(Entity* e){
     e->unlock();
 };
 
-void BehaviorManager::MakeTransition(Entity* e, char* name){
+bool BehaviorManager::MakeTransition(Entity* e, char* name){
+    bool transitionResult = false;
     e->lock();
     EntytyProperties* properties = Entityes[e];
     State* newState = properties->behavior->getState(name); //Current state
     if (newState) {
         Transition* transition = properties->currentState->child[newState];
         if (transition != 0){ //Link to state exists
-            transition->make(e); //Make transition to new state
+            transitionResult = transition->make(e); //Make transition to new state
             properties->currentState = newState; //Set new state as current
         }
     }
     e->unlock();
-
-//    State* result = properties->currentState->change(e);
-//    if (result) {
-//        properties->currentState = result;
-//    }
+    return transitionResult;
 };
 
 

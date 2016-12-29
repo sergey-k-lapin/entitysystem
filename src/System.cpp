@@ -30,11 +30,11 @@ void System::AddEntity(Entity* e){
 
 }
 
-void System::DeleteEntity(Entity* e){
+void System::DeleteEntity(Entity* e){ //???
 //    removed.push_back(e);
 }
 
-void System::ApplyRemove() {
+void System::ApplyRemove() { //Depricated
 //    while (!removed.empty()){
 //        Entity* e = removed.front();
 //        inEntitySet->erase(e); //Remove entity from system
@@ -57,7 +57,7 @@ void System::ApplyRemove() {
 //    }
 };
 
-void System::ApplyAdd() {
+void System::ApplyAdd() { //Depricated
 //    while (!added.empty()){ //Process and add all new
 //        Entity* e = added.front();
 //        e->getSystemBits()->set(this->id);
@@ -67,26 +67,26 @@ void System::ApplyAdd() {
 //    }
 };
 
-void System::ApplyChanges() {
+void System::ApplyChanges() { //Depricated
 //    ApplyRemove();
 //    ApplyAdd();
 }
 
-void System::CheckComponent(Entity* e) {
-    e->systemBits->reset(this->id); //Reset system bit
-//    e->lock();
-    for (auto it=e->removedComponents.begin(); it != e->removedComponents.end();) {
-        if ((*it)->usedInSystems.test(this->id)) {
-            (*it)->usedInSystems.reset(this->id);
-            if ((*it)->usedInSystems.none()){
-                e->removeFromCurrent((*it));
-            }
-            it = e->removedComponents.erase(it);
-        } else {
-                    ++it;
-                }
-        }
-//    e->unlock();
+void System::CheckComponent(Entity* e) { //Depricated
+//    e->systemBits->reset(this->id); //Reset system bit
+////    e->lock();
+//    for (auto it=e->removedComponents.begin(); it != e->removedComponents.end();) {
+//        if ((*it)->usedInSystems.test(this->id)) {
+//            (*it)->usedInSystems.reset(this->id);
+//            if ((*it)->usedInSystems.none()){
+//                e->removeFromCurrent((*it));
+//            }
+//            it = e->removedComponents.erase(it);
+//        } else {
+//                    ++it;
+//                }
+//        }
+////    e->unlock();
 }
 
 void System::AcceptComponentType(ComponentType *type){

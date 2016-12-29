@@ -24,36 +24,30 @@ void AsyncSystem::InternalThreadEntry(){
         for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end();){
             Entity* e = *it;
             e->lock();
-//            disabled =  ~*e->disabledComponetBits & *e->componentBits;
-
             if (this->CompatibleWithConponents(e->componentBits)){
-//                if ( disabled.none() ) {
-                    this->processEntity(e);
-//                }
+                this->processEntity(e);
                 ++it;
             } else {
                 std::cout << "Remove entity " << e << " from " << this << std::endl;
-//                e->systemBits->reset(this->id);
-                CheckComponent(e);
+                e->systemBits->reset(this->id);
                 it = currentOutEntitySet->erase(it);
             }
             e->unlock();
         }
-//        this->ApplyChanges();
-        if ( inEntitySet->empty() && added.empty() && removed.empty() ){
-            pthread_mutex_lock(&my_mutex);
+        pthread_mutex_lock(&my_mutex);
+        if ( inEntitySet->empty()/* && added.empty() && removed.empty()*/ ){
             pthread_cond_wait(&cond, &my_mutex);
-            pthread_mutex_unlock(&my_mutex);
         }
+        pthread_mutex_unlock(&my_mutex);
         pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
         pthread_testcancel();
     }
 }
 
 void AsyncSystem::AddEntity(Entity* e){
+    pthread_mutex_lock(&my_mutex);
     System::AddEntity(e);
-    //  pthread_mutex_lock(&my_mutex);
     pthread_cond_signal(&cond);
-    //  pthread_mutex_unlock(&my_mutex);
+    pthread_mutex_unlock(&my_mutex);
     
 }

@@ -58,7 +58,7 @@ void World::changeEntity(Entity *e){ //Move to System Manager
 //    SystemsBitset enabledSystems;
 //    enabledSystems.reset();
 //    ComponentsBitset  resultComponentBits = *e->componentBits & *e->disabledComponetBits;
-    ComponentsBitset  resultComponentBits = *e->componentBits & *e->disabledComponetBits;
+    ComponentsBitset  resultComponentBits = *e->componentBits;
 
 ////    Take a systems
 //    auto systemRange = sm->systemsByComponentHash.find(resultComponentBits);

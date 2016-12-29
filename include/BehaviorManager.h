@@ -39,7 +39,7 @@ public:
     
     void addToProcess(Entity* e);
     void MakeTransition(Entity* e);
-    void MakeTransition(Entity* e, char* name);
+    bool MakeTransition(Entity* e, char* name);
 
 private:
     void InternalThreadEntry();
