@@ -39,7 +39,7 @@ void AsyncSystem::InternalThreadEntry(){
 #endif
         }
         pthread_mutex_lock(&my_mutex);
-        if ( inEntitySet->empty()/* && added.empty() && removed.empty()*/ ){
+        if ( inEntitySet->empty() ){
             pthread_cond_wait(&cond, &my_mutex);
         }
         pthread_mutex_unlock(&my_mutex);

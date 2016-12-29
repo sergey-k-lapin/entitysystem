@@ -35,6 +35,7 @@ public:
     SystemManager *sm;
     EntityManager *em;
     BehaviorManager* bm;
+    
     Context* activeContext;
     Context* visibleContext;
     std::vector<Context*> contextList;

@@ -38,13 +38,6 @@ public:
     ComponentsBitset getComponetBits();
     std::unordered_set<Entity*>* outEntitySet;
     std::unordered_set<Entity*>* inEntitySet;
-
-    void ApplyChanges();
-    void ApplyRemove();
-    void ApplyAdd();
-    
-    void CheckComponent(Entity* e);
-    
     unsigned int id;
     int Lock(pthread_mutex_t* mutex);
     int Unlock(pthread_mutex_t* mutex);
@@ -54,10 +47,7 @@ public:
 protected:
     static unsigned int _ID;
     ComponentsBitset componentBits;
-    World* world;
-    std::deque<Entity*> added;
-    std::deque<Entity*> removed;
-    
+    World* world;    
 };
 
 #endif	/* SYSTEM_H */

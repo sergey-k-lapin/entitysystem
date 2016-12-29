@@ -36,9 +36,9 @@ void EntityManager::InternalThreadEntry(){
 }
 
 void EntityManager::addToChange(Entity* e){
+    pthread_mutex_lock(&my_mutex);
     changed.push_back( e );
-//  pthread_mutex_lock(&my_mutex);
     pthread_cond_signal(&cond);
-//  pthread_mutex_unlock(&my_mutex);
+    pthread_mutex_unlock(&my_mutex);
 
 }

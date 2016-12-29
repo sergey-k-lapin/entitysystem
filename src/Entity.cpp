@@ -8,7 +8,7 @@
 
 #include <Entity.h>
 #include <EntityManager.h>
-#include <SystemManager.h>
+//#include <SystemManager.h>
 
 int Entity::INDEX = 0;
 
@@ -17,37 +17,16 @@ Entity::Entity(World *world) {
 	this->id = INDEX++;
 	systemBits = new SystemsBitset();
 	componentBits = new ComponentsBitset();
-    changedComponentBits = new ComponentsBitset();
-    
-    disabledComponetBits = new ComponentsBitset();
-    disabledComponetBits->set();
-    
     //Create recursive mutex
     pthread_mutexattr_init(&mutexAttr);
     pthread_mutexattr_settype(&mutexAttr, PTHREAD_MUTEX_RECURSIVE);
     pthread_mutex_init(&mutex, &mutexAttr);
-    
-	reset();
 }
 
 Entity::~Entity() {
-    reset();
-    delete disabledComponetBits;
     delete componentBits;
-    delete changedComponentBits;
     delete systemBits;
 }
-
-Entity* Entity::disableComponent(ComponentType* type){
-    disabledComponetBits->reset(type->getIndex());
-    return this;
-};
-
-Entity* Entity::enableComponent(ComponentType* type){
-    disabledComponetBits->set(type->getIndex());
-    return this;
-};
-
 
 int Entity::getId() {
         return this->id;
@@ -59,18 +38,6 @@ ComponentsBitset *Entity::getComponentBits(){
 
 SystemsBitset *Entity::getSystemBits(){
     return this->systemBits;
-}
-
-void Entity::reset(){ // Depricated
-    //Flip bits
-//    (*componentBits) = (*changedComponentBits);
-    addedComponentBits.reset();
-    removedComponentBits.reset();    
-//    this->changed = false;
-}
-
-bool Entity::changed(){
-    return (this->addedComponentBits.none() | this->removedComponentBits.none());
 }
 
 Entity* Entity::addComponent(Component *component){
@@ -92,21 +59,6 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
 #ifdef ENTITY_CHANGE_AUTOLOCK
     unlock();
 #endif
-    return this;
-}
-
-Entity* Entity::addToCurrent(Component *component, ComponentType *type){ //Remove
-//    components.insert(std::pair<ComponentType*, Component*>(type, component));
-    return this;
-}
-
-Entity* Entity::removeFromCurrent(Component *component){ //Remove
-    ComponentType *type = ComponentType::getTypeFor(component);
-    auto c = components.find(type);
-    if (c != components.end()){
-        components.erase(c);
-        delete component;
-    }
     return this;
 }
 
@@ -182,18 +134,18 @@ int Entity::unlock(){
 void Entity::addToWorld(){
     world->addEntity(this);
 }
-void Entity::changedInWorld(){
-    
-}
+//void Entity::changedInWorld(){
+//    
+//}
 void Entity::deleteFromWorld(){
     
 }
-void Entity::enable(){
-    
-}
-void  Entity::disable(){
-    
-}
+//void Entity::enable(){
+//    
+//}
+//void  Entity::disable(){
+//    
+//}
 World *Entity::getWorld(){
     return world;
 };
