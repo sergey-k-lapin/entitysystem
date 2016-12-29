@@ -23,7 +23,9 @@ void AsyncSystem::InternalThreadEntry(){
         std::unordered_set<Entity*>* currentOutEntitySet = outEntitySet;
         for (auto it = currentOutEntitySet->begin(); it != currentOutEntitySet->end();){
             Entity* e = *it;
+#ifdef ENTITY_CHANGE_AUTOLOCK
             e->lock();
+#endif
             if (this->CompatibleWithConponents(e->componentBits)){
                 this->processEntity(e);
                 ++it;
@@ -32,7 +34,9 @@ void AsyncSystem::InternalThreadEntry(){
                 e->systemBits->reset(this->id);
                 it = currentOutEntitySet->erase(it);
             }
+#ifdef ENTITY_CHANGE_AUTOLOCK
             e->unlock();
+#endif
         }
         pthread_mutex_lock(&my_mutex);
         if ( inEntitySet->empty()/* && added.empty() && removed.empty()*/ ){

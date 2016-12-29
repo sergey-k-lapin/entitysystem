@@ -33,18 +33,24 @@ void BehaviorManager::Assign(Entity* e, const std::type_info *id){
 };
 
 void BehaviorManager::MakeTransition(Entity* e){
+#ifdef ENTITY_CHANGE_AUTOLOCK
     e->lock();
+#endif
     EntytyProperties* properties = Entityes[e];
     State* result = properties->currentState->change(e);
     if (result) {
         properties->currentState = result;
     }
+#ifdef ENTITY_CHANGE_AUTOLOCK
     e->unlock();
+#endif
 };
 
 bool BehaviorManager::MakeTransition(Entity* e, char* name){
     bool transitionResult = false;
+#ifdef ENTITY_CHANGE_AUTOLOCK
     e->lock();
+#endif
     EntytyProperties* properties = Entityes[e];
     State* newState = properties->behavior->getState(name); //Current state
     if (newState) {
@@ -54,7 +60,9 @@ bool BehaviorManager::MakeTransition(Entity* e, char* name){
             properties->currentState = newState; //Set new state as current
         }
     }
+#ifdef ENTITY_CHANGE_AUTOLOCK
     e->unlock();
+#endif
     return transitionResult;
 };
 

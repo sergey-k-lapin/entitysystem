@@ -61,7 +61,7 @@ SystemsBitset *Entity::getSystemBits(){
     return this->systemBits;
 }
 
-void Entity::reset(){
+void Entity::reset(){ // Depricated
     //Flip bits
 //    (*componentBits) = (*changedComponentBits);
     addedComponentBits.reset();
@@ -79,7 +79,9 @@ Entity* Entity::addComponent(Component *component){
 
 Entity* Entity::addComponent(Component *component, ComponentType *type){
     int index = type->getIndex();
+#ifdef ENTITY_CHANGE_AUTOLOCK
     lock();
+#endif
     if (componentBits->test(index)) {
         Component* old = components[type];
         delete old;
@@ -87,7 +89,9 @@ Entity* Entity::addComponent(Component *component, ComponentType *type){
         componentBits->set(index);
     }
     components[type] = component;
+#ifdef ENTITY_CHANGE_AUTOLOCK
     unlock();
+#endif
     return this;
 }
 
@@ -114,12 +118,16 @@ Entity* Entity::removeComponent(Component *component){
 Entity * Entity::removeComponent(ComponentType* type) {
     Entity* ret = NULL;
     auto it = components.find( type );
+#ifdef ENTITY_CHANGE_AUTOLOCK
     lock();
+#endif
     if (it != components.end()) {
         removeComponent(it->second, it->first);
         ret = this;
     }
+#ifdef ENTITY_CHANGE_AUTOLOCK
     unlock();
+#endif
     return ret;
 }
 
@@ -128,37 +136,35 @@ void Entity::addToChange() {
 }
 
 Entity* Entity::removeComponent(Component* component,ComponentType* type){
-//    lock();
     int index = type->getIndex();
     componentBits->reset(index);
-//    unlock();
     return this;
 }
 
 Component* Entity::getComponent(ComponentType *type){
     Component* ret;
+#ifdef ENTITY_CHANGE_AUTOLOCK
     lock();
+#endif
     ret = NULL;
     auto it = components.find(type);
     if (it != components.end()){
         ret = it->second;
     }
+#ifdef ENTITY_CHANGE_AUTOLOCK
     unlock();
+#endif
     return ret;
 }
 
-void Entity::update(){ //TODO: Должно реализоваться в ComponentManager
-    this->lock();
-//    (*changedComponentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
-//    (*componentBits) = ((*componentBits) | addedComponentBits) & (~removedComponentBits);
-//    this->reset();
+void Entity::update(){
+#ifdef ENTITY_CHANGE_AUTOLOCK
+    lock();
+#endif
      world->changeEntity( this );
-     this->unlock();
-//    for (auto it = removedComponents.begin(); it != removedComponents.end(); ++it){
-////        delete *it; //TODO: object manager...
-//        components.erase(components.find(*it));
-//    }
-//    removedComponents.clear();
+#ifdef ENTITY_CHANGE_AUTOLOCK
+    unlock();
+#endif
 }
 
 
