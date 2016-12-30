@@ -28,10 +28,6 @@ Entity::~Entity() {
     delete systemBits;
 }
 
-int Entity::getId() {
-        return this->id;
-}
-
 ComponentsBitset *Entity::getComponentBits(){
     return componentBits;
 }

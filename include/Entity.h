@@ -21,14 +21,26 @@ class ComponentType;
 class World;
 class ComponentManager;
 
-
+//! Сущность
 class Entity {
 public:
+    /** \brief Конструктор\n Class constructor
+     \details Создаем экземпляр сущности
+     */
+    /*!
+     \param world ссылка на мир
+     */
     Entity(World *world);
+    //! Деструктор\n
+    //! Class destructor
     virtual ~Entity();    
-    int getId();
+    //! Получить битовую маску компонентов\n
+    //! Get components bit mask
     ComponentsBitset *getComponentBits();
+    //! Получить битоваую маску сисем\n
+    //! Get systems bit mask
     SystemsBitset *getSystemBits();
+    //! Получить ссылку на компонент
     template <typename c>
     Component *getComponent(){
         return this->getComponent(ComponentType::getTypeFor<c>());
@@ -50,16 +62,23 @@ public:
     int lock();
     int unlock();
     void addToChange();
+    //! Битовая маска компонентов\n
+    //! Components bit mask
     ComponentsBitset *componentBits;
-    std::unordered_map<ComponentType*, Component*> components;
+    //! Битовая маска систем\n
+    //! Systems bit mask
+    SystemsBitset *systemBits;
+    //! Ссылка на объект World\n
+    //! Pointer to World
+    World *world;
+    //! Идентификатор сущности\n
+    //! Entity's ID
+    int id;
+private:
+    static int INDEX;
     pthread_mutex_t mutex;
     pthread_mutexattr_t mutexAttr;
-    SystemsBitset *systemBits;
-
-private:
-    int id;
-    static int INDEX;
-    World *world;
+    std::unordered_map<ComponentType*, Component*> components;
 };
 
 #endif	/* ENTITY_H */
