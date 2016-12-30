@@ -41,10 +41,17 @@ public:
     //! Get systems bit mask
     SystemsBitset *getSystemBits();
     //! Получить ссылку на компонент
+    /** 
+     \return Ссылка на объект компонента или NULL, если компонента указанного типа не существует.
+     */
     template <typename c>
     Component *getComponent(){
         return this->getComponent(ComponentType::getTypeFor<c>());
     };
+    /** Получить ссылку на компонент
+     \param type - тип компонента
+     \return Ссылка на объект компонента или NULL, если компонента указанного типа не существует.
+     */
     Component *getComponent(ComponentType *type);
     void addToWorld();
     void deleteFromWorld();
