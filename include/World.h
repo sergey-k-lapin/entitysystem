@@ -10,7 +10,6 @@
 
 #include <vector>
 #include <unordered_map>
-
 #include <Context.h>
 
 class SystemManager;

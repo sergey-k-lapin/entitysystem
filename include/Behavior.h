@@ -12,8 +12,6 @@
 #include <stdio.h>
 #include <State.h>
 #include <Transition.h>
-//#include <Goal.h>
-//#include <bentity.h>
 
 class Behavior {
 public:

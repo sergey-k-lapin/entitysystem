@@ -1,0 +1,391 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5D3E0D9D1E27B54B007D2F37 /* AsyncComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D8A1E27B54B007D2F37 /* AsyncComponent.h */; };
+		5D3E0D9E1E27B54B007D2F37 /* AsyncSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D8B1E27B54B007D2F37 /* AsyncSystem.h */; };
+		5D3E0D9F1E27B54B007D2F37 /* Behavior.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D8C1E27B54B007D2F37 /* Behavior.h */; };
+		5D3E0DA01E27B54B007D2F37 /* BehaviorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D8D1E27B54B007D2F37 /* BehaviorManager.h */; };
+		5D3E0DA11E27B54B007D2F37 /* Component.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D8E1E27B54B007D2F37 /* Component.h */; };
+		5D3E0DA21E27B54B007D2F37 /* ComponentType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D8F1E27B54B007D2F37 /* ComponentType.h */; };
+		5D3E0DA31E27B54B007D2F37 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D901E27B54B007D2F37 /* config.h */; };
+		5D3E0DA41E27B54B007D2F37 /* Context.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D911E27B54B007D2F37 /* Context.h */; };
+		5D3E0DA51E27B54B007D2F37 /* Entity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D921E27B54B007D2F37 /* Entity.h */; };
+		5D3E0DA61E27B54B007D2F37 /* EntityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D931E27B54B007D2F37 /* EntityManager.h */; };
+		5D3E0DA71E27B54B007D2F37 /* entitysystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D941E27B54B007D2F37 /* entitysystem.h */; };
+		5D3E0DA81E27B54B007D2F37 /* State.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D951E27B54B007D2F37 /* State.h */; };
+		5D3E0DA91E27B54B007D2F37 /* SyncSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D961E27B54B007D2F37 /* SyncSystem.h */; };
+		5D3E0DAA1E27B54B007D2F37 /* System.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D971E27B54B007D2F37 /* System.h */; };
+		5D3E0DAB1E27B54B007D2F37 /* SystemManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D981E27B54B007D2F37 /* SystemManager.h */; };
+		5D3E0DAC1E27B54B007D2F37 /* SystemType.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D991E27B54B007D2F37 /* SystemType.h */; };
+		5D3E0DAD1E27B54B007D2F37 /* Thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D9A1E27B54B007D2F37 /* Thread.h */; };
+		5D3E0DAE1E27B54B007D2F37 /* Transition.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D9B1E27B54B007D2F37 /* Transition.h */; };
+		5D3E0DAF1E27B54B007D2F37 /* World.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D3E0D9C1E27B54B007D2F37 /* World.h */; };
+		5D3E0DC11E27B592007D2F37 /* AsyncSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB11E27B592007D2F37 /* AsyncSystem.cpp */; };
+		5D3E0DC21E27B592007D2F37 /* Behavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB21E27B592007D2F37 /* Behavior.cpp */; };
+		5D3E0DC31E27B592007D2F37 /* BehaviorManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB31E27B592007D2F37 /* BehaviorManager.cpp */; };
+		5D3E0DC41E27B592007D2F37 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB41E27B592007D2F37 /* Component.cpp */; };
+		5D3E0DC51E27B592007D2F37 /* ComponentType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB51E27B592007D2F37 /* ComponentType.cpp */; };
+		5D3E0DC61E27B592007D2F37 /* Context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB61E27B592007D2F37 /* Context.cpp */; };
+		5D3E0DC71E27B592007D2F37 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB71E27B592007D2F37 /* Entity.cpp */; };
+		5D3E0DC81E27B592007D2F37 /* EntityManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB81E27B592007D2F37 /* EntityManager.cpp */; };
+		5D3E0DC91E27B592007D2F37 /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DB91E27B592007D2F37 /* State.cpp */; };
+		5D3E0DCA1E27B592007D2F37 /* SyncSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DBA1E27B592007D2F37 /* SyncSystem.cpp */; };
+		5D3E0DCB1E27B592007D2F37 /* System.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DBB1E27B592007D2F37 /* System.cpp */; };
+		5D3E0DCC1E27B592007D2F37 /* SystemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DBC1E27B592007D2F37 /* SystemManager.cpp */; };
+		5D3E0DCD1E27B592007D2F37 /* SystemType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DBD1E27B592007D2F37 /* SystemType.cpp */; };
+		5D3E0DCE1E27B592007D2F37 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DBE1E27B592007D2F37 /* Thread.cpp */; };
+		5D3E0DCF1E27B592007D2F37 /* Transition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DBF1E27B592007D2F37 /* Transition.cpp */; };
+		5D3E0DD01E27B592007D2F37 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D3E0DC01E27B592007D2F37 /* World.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5D3E0D801E27B38C007D2F37 /* libentitysystem.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libentitysystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D3E0D8A1E27B54B007D2F37 /* AsyncComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncComponent.h; path = ../../include/AsyncComponent.h; sourceTree = "<group>"; };
+		5D3E0D8B1E27B54B007D2F37 /* AsyncSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSystem.h; path = ../../include/AsyncSystem.h; sourceTree = "<group>"; };
+		5D3E0D8C1E27B54B007D2F37 /* Behavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Behavior.h; path = ../../include/Behavior.h; sourceTree = "<group>"; };
+		5D3E0D8D1E27B54B007D2F37 /* BehaviorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BehaviorManager.h; path = ../../include/BehaviorManager.h; sourceTree = "<group>"; };
+		5D3E0D8E1E27B54B007D2F37 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Component.h; path = ../../include/Component.h; sourceTree = "<group>"; };
+		5D3E0D8F1E27B54B007D2F37 /* ComponentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComponentType.h; path = ../../include/ComponentType.h; sourceTree = "<group>"; };
+		5D3E0D901E27B54B007D2F37 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../../include/config.h; sourceTree = "<group>"; };
+		5D3E0D911E27B54B007D2F37 /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Context.h; path = ../../include/Context.h; sourceTree = "<group>"; };
+		5D3E0D921E27B54B007D2F37 /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Entity.h; path = ../../include/Entity.h; sourceTree = "<group>"; };
+		5D3E0D931E27B54B007D2F37 /* EntityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityManager.h; path = ../../include/EntityManager.h; sourceTree = "<group>"; };
+		5D3E0D941E27B54B007D2F37 /* entitysystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = entitysystem.h; path = ../../include/entitysystem.h; sourceTree = "<group>"; };
+		5D3E0D951E27B54B007D2F37 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = State.h; path = ../../include/State.h; sourceTree = "<group>"; };
+		5D3E0D961E27B54B007D2F37 /* SyncSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncSystem.h; path = ../../include/SyncSystem.h; sourceTree = "<group>"; };
+		5D3E0D971E27B54B007D2F37 /* System.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = System.h; path = ../../include/System.h; sourceTree = "<group>"; };
+		5D3E0D981E27B54B007D2F37 /* SystemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemManager.h; path = ../../include/SystemManager.h; sourceTree = "<group>"; };
+		5D3E0D991E27B54B007D2F37 /* SystemType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemType.h; path = ../../include/SystemType.h; sourceTree = "<group>"; };
+		5D3E0D9A1E27B54B007D2F37 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Thread.h; path = ../../include/Thread.h; sourceTree = "<group>"; };
+		5D3E0D9B1E27B54B007D2F37 /* Transition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transition.h; path = ../../include/Transition.h; sourceTree = "<group>"; };
+		5D3E0D9C1E27B54B007D2F37 /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = World.h; path = ../../include/World.h; sourceTree = "<group>"; };
+		5D3E0DB11E27B592007D2F37 /* AsyncSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AsyncSystem.cpp; path = ../../src/AsyncSystem.cpp; sourceTree = "<group>"; };
+		5D3E0DB21E27B592007D2F37 /* Behavior.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Behavior.cpp; path = ../../src/Behavior.cpp; sourceTree = "<group>"; };
+		5D3E0DB31E27B592007D2F37 /* BehaviorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BehaviorManager.cpp; path = ../../src/BehaviorManager.cpp; sourceTree = "<group>"; };
+		5D3E0DB41E27B592007D2F37 /* Component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Component.cpp; path = ../../src/Component.cpp; sourceTree = "<group>"; };
+		5D3E0DB51E27B592007D2F37 /* ComponentType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ComponentType.cpp; path = ../../src/ComponentType.cpp; sourceTree = "<group>"; };
+		5D3E0DB61E27B592007D2F37 /* Context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Context.cpp; path = ../../src/Context.cpp; sourceTree = "<group>"; };
+		5D3E0DB71E27B592007D2F37 /* Entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Entity.cpp; path = ../../src/Entity.cpp; sourceTree = "<group>"; };
+		5D3E0DB81E27B592007D2F37 /* EntityManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EntityManager.cpp; path = ../../src/EntityManager.cpp; sourceTree = "<group>"; };
+		5D3E0DB91E27B592007D2F37 /* State.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = State.cpp; path = ../../src/State.cpp; sourceTree = "<group>"; };
+		5D3E0DBA1E27B592007D2F37 /* SyncSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyncSystem.cpp; path = ../../src/SyncSystem.cpp; sourceTree = "<group>"; };
+		5D3E0DBB1E27B592007D2F37 /* System.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = System.cpp; path = ../../src/System.cpp; sourceTree = "<group>"; };
+		5D3E0DBC1E27B592007D2F37 /* SystemManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SystemManager.cpp; path = ../../src/SystemManager.cpp; sourceTree = "<group>"; };
+		5D3E0DBD1E27B592007D2F37 /* SystemType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SystemType.cpp; path = ../../src/SystemType.cpp; sourceTree = "<group>"; };
+		5D3E0DBE1E27B592007D2F37 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Thread.cpp; path = ../../src/Thread.cpp; sourceTree = "<group>"; };
+		5D3E0DBF1E27B592007D2F37 /* Transition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transition.cpp; path = ../../src/Transition.cpp; sourceTree = "<group>"; };
+		5D3E0DC01E27B592007D2F37 /* World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = World.cpp; path = ../../src/World.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5D3E0D7D1E27B38C007D2F37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5D3E0D771E27B38B007D2F37 = {
+			isa = PBXGroup;
+			children = (
+				5D3E0DB01E27B55E007D2F37 /* src */,
+				5D3E0D891E27B518007D2F37 /* includes */,
+				5D3E0D811E27B38C007D2F37 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5D3E0D811E27B38C007D2F37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D3E0D801E27B38C007D2F37 /* libentitysystem.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5D3E0D891E27B518007D2F37 /* includes */ = {
+			isa = PBXGroup;
+			children = (
+				5D3E0D8A1E27B54B007D2F37 /* AsyncComponent.h */,
+				5D3E0D8B1E27B54B007D2F37 /* AsyncSystem.h */,
+				5D3E0D8C1E27B54B007D2F37 /* Behavior.h */,
+				5D3E0D8D1E27B54B007D2F37 /* BehaviorManager.h */,
+				5D3E0D8E1E27B54B007D2F37 /* Component.h */,
+				5D3E0D8F1E27B54B007D2F37 /* ComponentType.h */,
+				5D3E0D901E27B54B007D2F37 /* config.h */,
+				5D3E0D911E27B54B007D2F37 /* Context.h */,
+				5D3E0D921E27B54B007D2F37 /* Entity.h */,
+				5D3E0D931E27B54B007D2F37 /* EntityManager.h */,
+				5D3E0D941E27B54B007D2F37 /* entitysystem.h */,
+				5D3E0D951E27B54B007D2F37 /* State.h */,
+				5D3E0D961E27B54B007D2F37 /* SyncSystem.h */,
+				5D3E0D971E27B54B007D2F37 /* System.h */,
+				5D3E0D981E27B54B007D2F37 /* SystemManager.h */,
+				5D3E0D991E27B54B007D2F37 /* SystemType.h */,
+				5D3E0D9A1E27B54B007D2F37 /* Thread.h */,
+				5D3E0D9B1E27B54B007D2F37 /* Transition.h */,
+				5D3E0D9C1E27B54B007D2F37 /* World.h */,
+			);
+			name = includes;
+			sourceTree = "<group>";
+		};
+		5D3E0DB01E27B55E007D2F37 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				5D3E0DB11E27B592007D2F37 /* AsyncSystem.cpp */,
+				5D3E0DB21E27B592007D2F37 /* Behavior.cpp */,
+				5D3E0DB31E27B592007D2F37 /* BehaviorManager.cpp */,
+				5D3E0DB41E27B592007D2F37 /* Component.cpp */,
+				5D3E0DB51E27B592007D2F37 /* ComponentType.cpp */,
+				5D3E0DB61E27B592007D2F37 /* Context.cpp */,
+				5D3E0DB71E27B592007D2F37 /* Entity.cpp */,
+				5D3E0DB81E27B592007D2F37 /* EntityManager.cpp */,
+				5D3E0DB91E27B592007D2F37 /* State.cpp */,
+				5D3E0DBA1E27B592007D2F37 /* SyncSystem.cpp */,
+				5D3E0DBB1E27B592007D2F37 /* System.cpp */,
+				5D3E0DBC1E27B592007D2F37 /* SystemManager.cpp */,
+				5D3E0DBD1E27B592007D2F37 /* SystemType.cpp */,
+				5D3E0DBE1E27B592007D2F37 /* Thread.cpp */,
+				5D3E0DBF1E27B592007D2F37 /* Transition.cpp */,
+				5D3E0DC01E27B592007D2F37 /* World.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5D3E0D7E1E27B38C007D2F37 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D3E0D9E1E27B54B007D2F37 /* AsyncSystem.h in Headers */,
+				5D3E0DAB1E27B54B007D2F37 /* SystemManager.h in Headers */,
+				5D3E0DA11E27B54B007D2F37 /* Component.h in Headers */,
+				5D3E0D9F1E27B54B007D2F37 /* Behavior.h in Headers */,
+				5D3E0DAA1E27B54B007D2F37 /* System.h in Headers */,
+				5D3E0DA71E27B54B007D2F37 /* entitysystem.h in Headers */,
+				5D3E0DA91E27B54B007D2F37 /* SyncSystem.h in Headers */,
+				5D3E0DA01E27B54B007D2F37 /* BehaviorManager.h in Headers */,
+				5D3E0DA41E27B54B007D2F37 /* Context.h in Headers */,
+				5D3E0DAC1E27B54B007D2F37 /* SystemType.h in Headers */,
+				5D3E0DA81E27B54B007D2F37 /* State.h in Headers */,
+				5D3E0DAF1E27B54B007D2F37 /* World.h in Headers */,
+				5D3E0DAE1E27B54B007D2F37 /* Transition.h in Headers */,
+				5D3E0DA21E27B54B007D2F37 /* ComponentType.h in Headers */,
+				5D3E0DAD1E27B54B007D2F37 /* Thread.h in Headers */,
+				5D3E0D9D1E27B54B007D2F37 /* AsyncComponent.h in Headers */,
+				5D3E0DA31E27B54B007D2F37 /* config.h in Headers */,
+				5D3E0DA51E27B54B007D2F37 /* Entity.h in Headers */,
+				5D3E0DA61E27B54B007D2F37 /* EntityManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5D3E0D7F1E27B38C007D2F37 /* entitysystem */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D3E0D841E27B38C007D2F37 /* Build configuration list for PBXNativeTarget "entitysystem" */;
+			buildPhases = (
+				5D3E0D7C1E27B38C007D2F37 /* Sources */,
+				5D3E0D7D1E27B38C007D2F37 /* Frameworks */,
+				5D3E0D7E1E27B38C007D2F37 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = entitysystem;
+			productName = entitysystem;
+			productReference = 5D3E0D801E27B38C007D2F37 /* libentitysystem.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5D3E0D781E27B38B007D2F37 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = lapingames.ru;
+				TargetAttributes = {
+					5D3E0D7F1E27B38C007D2F37 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 5D3E0D7B1E27B38B007D2F37 /* Build configuration list for PBXProject "entitysystem" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5D3E0D771E27B38B007D2F37;
+			productRefGroup = 5D3E0D811E27B38C007D2F37 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5D3E0D7F1E27B38C007D2F37 /* entitysystem */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5D3E0D7C1E27B38C007D2F37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D3E0DC31E27B592007D2F37 /* BehaviorManager.cpp in Sources */,
+				5D3E0DCF1E27B592007D2F37 /* Transition.cpp in Sources */,
+				5D3E0DD01E27B592007D2F37 /* World.cpp in Sources */,
+				5D3E0DC41E27B592007D2F37 /* Component.cpp in Sources */,
+				5D3E0DCD1E27B592007D2F37 /* SystemType.cpp in Sources */,
+				5D3E0DC81E27B592007D2F37 /* EntityManager.cpp in Sources */,
+				5D3E0DC71E27B592007D2F37 /* Entity.cpp in Sources */,
+				5D3E0DC11E27B592007D2F37 /* AsyncSystem.cpp in Sources */,
+				5D3E0DC61E27B592007D2F37 /* Context.cpp in Sources */,
+				5D3E0DC51E27B592007D2F37 /* ComponentType.cpp in Sources */,
+				5D3E0DC21E27B592007D2F37 /* Behavior.cpp in Sources */,
+				5D3E0DCE1E27B592007D2F37 /* Thread.cpp in Sources */,
+				5D3E0DC91E27B592007D2F37 /* State.cpp in Sources */,
+				5D3E0DCB1E27B592007D2F37 /* System.cpp in Sources */,
+				5D3E0DCC1E27B592007D2F37 /* SystemManager.cpp in Sources */,
+				5D3E0DCA1E27B592007D2F37 /* SyncSystem.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5D3E0D821E27B38C007D2F37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5D3E0D831E27B38C007D2F37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5D3E0D851E27B38C007D2F37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5D3E0D861E27B38C007D2F37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5D3E0D7B1E27B38B007D2F37 /* Build configuration list for PBXProject "entitysystem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D3E0D821E27B38C007D2F37 /* Debug */,
+				5D3E0D831E27B38C007D2F37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D3E0D841E27B38C007D2F37 /* Build configuration list for PBXNativeTarget "entitysystem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D3E0D851E27B38C007D2F37 /* Debug */,
+				5D3E0D861E27B38C007D2F37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5D3E0D781E27B38B007D2F37 /* Project object */;
+}

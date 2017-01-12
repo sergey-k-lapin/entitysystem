@@ -15,7 +15,6 @@
 #include <Thread.h>
 #include <Entity.h>
 #include <Behavior.h>
-//#include <BehaviorType.h>
 
 struct EntytyProperties {
     Behavior* behavior;

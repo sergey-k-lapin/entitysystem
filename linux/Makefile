@@ -1,12 +1,12 @@
 CC=g++
 CFLAGS= -c -g -std=c++11 -MMD -MP
 
-INCLUDEDIR = ./include
+INCLUDEDIR = ../include
 SRC=AsyncSystem.cpp Behavior.cpp BehaviorManager.cpp Component.cpp ComponentType.cpp Context.cpp Entity.cpp EntityManager.cpp State.cpp SyncSystem.cpp System.cpp SystemManager.cpp SystemType.cpp Thread.cpp Transition.cpp World.cpp
 OBJ=$(SOURCES:.cpp=.o)
 LIBFILE=entitysystem
 LIBDIR = ./lib
-SRCDIR = ./src
+SRCDIR = ../src
 lib: createdir $(LIBFILE)
 
 createdir:

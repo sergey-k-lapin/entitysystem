@@ -6,7 +6,7 @@
 //  Copyright © 2016 lapingames.com. All rights reserved.
 //
 
-#include "State.h"
+#include <State.h>
 
 State::State(char* name){
     this->name = name;

@@ -6,7 +6,7 @@
 //  Copyright © 2016 lapingames.com. All rights reserved.
 //
 
-#include "Behavior.h"
+#include <Behavior.h>
 
 Behavior::~Behavior(){
     

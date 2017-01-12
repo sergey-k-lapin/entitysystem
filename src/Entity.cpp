@@ -8,7 +8,6 @@
 
 #include <Entity.h>
 #include <EntityManager.h>
-//#include <SystemManager.h>
 
 int Entity::INDEX = 0;
 
