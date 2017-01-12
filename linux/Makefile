@@ -13,7 +13,7 @@ createdir:
 	mkdir -p $(LIBDIR)
 
 $(LIBFILE): $(SRC)
-	libtool -static -o $(LIBDIR)/lib$(LIBFILE).a $(LIBDIR)/*.o
+	ar rcs $(LIBDIR)/lib$(LIBFILE).a $(LIBDIR)/*.o
 
 AsyncSystem.cpp:
 	$(CC) $(CFLAGS) -I $(INCLUDEDIR) -MF "$(LIBDIR)/AsyncSystem.o.d" -o $(LIBDIR)/AsyncSystem.o $(SRCDIR)/AsyncSystem.cpp
